@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://thymeleaf.org">  
+ 
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ERGOS APP</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/x-icon" href="img/logo.png">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="css/skins/_all-skins.min.css">
+	<link href="plugins/toggle-master/bootstrap-toggle.css" rel="stylesheet">
+   <!-- DataTables -->
+    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+	<!-- Select2 -->
+  <link rel="stylesheet" href="plugins/select2/select2.min.css">
+  
+  <link rel="stylesheet" th:href="@{//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}" type="text/css"/>  
+ 
+</head>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+ 
+    <!-- Main Header -->
+ <div th:include="header"></div>
+  <!-- Left side column. contains the logo and sidebar -->
+
+ <div th:include="sidebar"></div>
+  <!-- Content Wrapper. Contains page content -->
+  
+ 
+
+<div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+       
+        <section class="content-header no-padding">
+<nav class="navbar no-margin">
+<div class="container-fluid">
+<ul class="nav navbar-nav">
+<li><a href="/viewMaterials"><i class="glyphicon glyphicon-search margin-r-10"></i>Search</a></li>
+<li class="active"><a href="/viewMaterials">New Material
+<span class="action-tools pull-right margin-l-20"><button type="button">×</button></span></a>
+</li>
+<li><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+<span class="action-tools margin-r-5"><button type="button">+</button></span>New</a>
+<ul class="dropdown-menu">
+
+<li role="presentation"><a role="menuitem" tabindex="-1" href="/newMaterial">+ New Material</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="/viewMaterials">+ View Material</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ New Task</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ View Task</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ New Price Guide</a></li>
+ 
+</ul>
+</li>
+
+</ul>
+</div>
+</nav>
+</section>
+
+<section class="margin-t-10">
+			<!-- <ul class="create-nav-list list-inline text-center no-margin">
+    <li class="active"><a href="#"><i class="fa  fa-check fa-icon-circle margin-r-10"></i>Material Details</a></li>
+    
+    </ul> -->
+		</section>
+        <!-- Main content -->
+        <section class="content">
+           
+		  
+		   
+		  
+		  
+		  
+		  
+		  
+		   <div class="row prev_next_area no-margin" >
+		   <div class="box box-info no-border no-shadow">
+		   	
+		 	
+		 	<form  class="request-form form-horizontal" action="#" th:object="${material}" >
+              <div class="box-body">
+              
+              <div class="row" style="margin-bottom:10px; border-bottom:1px solid #e5e5e5;">
+              <h4 class="title-band1"> <span class="title padding-5">Material Details</span> </h4>
+              <div class="col-md-6" style="border-right:1px solid #e5e5e5;">
+              		<div class="form-group">
+						<label class="col-md-4   ">Material Code:</label> 
+						<!-- <div class="col-md-10" th:text="${material.materialCode}"></div> -->
+						<div class="col-md-8 text-bold" th:text="${material.materialCode}"></div>
+					</div>
+					
+				    <div class="form-group">
+						<label class="col-md-4   ">Material Name:</label> 
+						<!-- <div class="col-md-6"><b><span th:text="${material.name}"></span></b></div> -->
+						<div class="col-md-8 text-bold" th:text="${material.name}"></div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4   ">Material Description:</label> 
+						<div class="col-md-8" th:text="${material.description}"></div>	 
+					</div>
+					
+					
+              </div><!-- col-md-6 -->
+              
+              <div class="col-md-3" style=" border-right:1px solid #e5e5e5;">
+              		<div class="form-group">
+						<label class="col-md-4   ">Cost:</label> 
+						<div class="col-md-8 text-bold" th:text="${material.unitCost}" id="unitCost_id"></div>
+					</div>
+					
+				    <div class="form-group">
+						<label class="col-md-4   ">Markup:</label> 
+						<div class="col-md-8 text-bold"  id="Markup_id" ></div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4   ">Charge:</label> 
+						<div class="col-md-8 text-bold" id="Charge_id" th:text="${material.unitCharge}" ></div>	 
+					</div>
+              	
+              	
+              </div><!-- col-md-3 -->
+              <div class="col-md-3">
+              		<!-- <img style="height: 50px;width:100%;" th:src="@{'data:image/jpeg;base64,'+${equipment.imgStr}}" />  -->
+              		<span id="barcode_print_data"><img style="height: 50px;width:200px;" th:src="@{'data:image/jpeg;base64,'+${barcodeStr}}" /></span>  
+              		<i class="fa fa-print fa-lg margin-l-5" id="barcode_print"></i>
+              		
+              </div><!-- col-md-3 -->
+              </div><!-- row -->
+              
+              <div class="row">
+              		 
+              		 <div class="col-md-3">
+              		 		<div class="form-group">
+								<label class="col-md-4   ">Manufacturer:</label> 
+								<!-- <div class="col-md-6"> <span th:text="${material.manufacturer}"></span> </div> -->
+								<div class="col-md-8 text-bold" th:text="${material.manufacturer}"> </div>	 
+							</div>
+				    		<div class="form-group">
+								<label class="col-md-4   ">Model Number:</label> 
+								<!-- <div class="col-md-6"><b><span th:text="${material.modelNumber}"></span></b></div> -->
+								<div class="col-md-8 text-bold" th:text="${material.modelNumber}"></div>	 
+							</div> 
+							<div class="form-group">
+						 		<label class="col-md-4   "> Primary Vendor:</label> 
+								<!-- <div class="col-md-6"><b><span th:text="${material.uOMId}"></span></b></div>  -->
+								<!-- <div class="col-md-8 text-bold" th:text="${uomcode}" ></div> -->
+							</div>
+							<div class="form-group">
+						 		<label class="col-md-4   "> Material Type:</label> 
+								<!-- <div class="col-md-6"><b><span th:text="${material.materialTypeId}"></span></b></div>  -->
+								<div class="col-md-8 text-bold" th:text="${materialtype}"></div> 
+							</div>
+							<div class="form-group">
+						 		<label class="col-md-4   "> Unit of Measure:</label> 
+								<!-- <div class="col-md-6"><b><span th:text="${material.uOMId}"></span></b></div>  -->
+								<div class="col-md-8 text-bold" th:text="${uomcode}" ></div>
+							</div>
+              		 </div><!-- col-md-3 -->
+              		 
+              		 
+              		 
+              		 <div class="col-md-3">
+              		 		<div class="form-group">
+						 		<label class="col-md-4   ">Inventory:</label> 
+								<!-- <div class="col-md-6"><b><span th:text="${material.isInventory}"></span></b></div>  -->
+								<div class="col-md-8 text-bold"  th:text="${material.isInventory}"></div> 
+							</div>
+							  <div class="form-group">
+									 <label class="col-md-4   ">Equipment:</label> 
+									<!-- <div class="col-md-6"><b><span th:text="${material.isEquipment}"></span></b></div>  -->
+									<div class="col-md-8 text-bold" th:text="${material.isEquipment}"></div> 
+							</div>
+							  <div class="form-group">
+									 <label class="col-md-4   ">Serialize:</label> 
+									<!-- <div class="col-md-6"><b><span th:text="${material.isSearialize}"></span></b></div>  -->
+									<div class="col-md-8 text-bold" th:text="${material.isSearialize}"></div> 
+							</div>
+							<div class="form-group">
+							     <label class="col-md-4   ">Subcontractor:</label> 
+									<!-- <div class="col-md-6"> <span th:text="${material.isSubcontractor}"></span> </div>  -->
+									<div class="col-md-8 text-bold" th:text="${material.isSubcontractor}"></div> 
+							 
+							</div>
+							  <div class="form-group">
+									 <label class="col-md-4   "> Consumable:</label> 
+									<!-- <div class="col-md-6"><b><span th:text="${material.isConsumable}"></span></b></div>  -->
+									<div class="col-md-8 text-bold" th:text="${material.isConsumable}"></div> 
+							</div>
+				    
+							  <div class="form-group">
+									 <label class="col-md-4   "> Chart of Account:</label> 
+									<div class="col-md-8 text-bold" th:text="${chartofaccounttype}" ></div> 
+							</div>
+              		 
+              		 </div><!-- col-md-3 -->
+              		 
+              		
+					
+					
+              		 <div class="col-md-3">
+              		 		<div><b>Manufacturer Warranty</b></div>
+              		 		<div class="form-group">
+									 <label class="col-md-4   "> Labor:</label> 
+									<div class="col-md-8 text-bold" th:text="${material.mfgLaborWarrantyYYMM}"  id="mfgLaborWarranty_id1"></div> 
+							</div>
+							<div class="form-group">
+									 <label class="col-md-4   "> Material:</label> 
+									<div class="col-md-8 text-bold" th:text="${material.mfgMaterialWarrantyYYMM}" id="mfgMaterialWarranty_id1"></div> 
+							</div>
+							
+							<div><b>Company Warranty</b></div>
+              		 		<div class="form-group">
+									 <label class="col-md-4   "> Labor:</label> 
+									<div class="col-md-8 text-bold" th:text="${material.companyLaborWarrantyYYMM}" id="companyLaborWarranty_id1"></div> 
+							</div>
+							<div class="form-group">
+									 <label class="col-md-4   "> Material:</label> 
+									<div class="col-md-8 text-bold" th:text="${material.companyMaterialWarrantyYYMM}" id="companyMaterialWarranty_id1"></div> 
+							</div>
+              		 
+              		 </div><!-- col-md-3 -->
+              		 
+              		  
+              		 <div class="col-md-3 margin-t-20" th:each="mediaStr : ${mediaStrList}" style=" border:1px solid #e5e5e5; padding-top:5px; padding-bottom:5px">
+              		 	<!-- <img class="margin-r-5 viewequ"  style="height: 250px;width:100%;" th:src="@{'data:image/jpeg;base64,'+${mediaStr}}"   > -->
+              		 	<img class="margin-r-5 viewequ" id="selected_img" style="height: 250px;width:100%;"  th:src="@{'data:image/jpeg;base64,'+${mediaStr}}"  >
+              		 </div><!-- col-md-3 -->
+              		 
+              		 
+              </div><!-- row -->
+			</div><!-- /.box-body -->
+						</form>
+						
+						</div>
+						
+						
+		   </div>
+		  
+		  
+		  <!-- <div class="box-footer text-right">
+			<div class="pull-left">
+			<button type="submit" class="btn btn-default margin-r-10 btn-flat no-border material_prev_btn " ><i class="fa fa-fw fa-backward margin-r-5"></i>Back</button>
+				
+			</div>
+			<div class="pull-right text-right">
+			   	<button type="submit" class="btn btn-label margin-r-10" data-toggle="modal" data-target="#cancelSO">Cancel</button>
+                <button type="submit" class="btn btn-primary btn-flat margin-r-10 material_next_btn">Next<i class="fa fa-fw fa-forward margin-l-5"></i></button>
+			</div>	
+           </div> -->
+		  
+		  
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+</div>
+
+
+
+ 
+	      
+<input type="hidden" name="timestamp" id="timestamp_id" th:value="${TIMESTAMP}"/>
+
+
+ <form action="/viewMaterial" id="Material_form_id">
+
+<!-- <input type="submit" id="viewMaterial_btn" style="display: none;"/> -->
+</form> 
+
+<input type="hidden" id="tabstatus" th:value="${tabstatus}"/>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 2.2.3 -->
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<!-- <script src="js/so/material.js"></script> -->
+<!-- Select2 -->
+<script src="plugins/select2/select2.full.min.js"></script>
+<!-- DataTables -->
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    
+    
+ 	<!-- bootstrap datepicker -->
+<!-- <script src="plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script> -->
+<!-- bootstrap time picker -->
+<!-- <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script> -->
+<!--   <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script> -->
+
+	<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- AdminLTE App -->
+<script src="js/app.min.js"></script>
+ 
+<script src="plugins/toggle-master/bootstrap-toggle.js"></script>
+
+  
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. Slimscroll is required when using the
+     fixed layout. -->
+<!-- page script -->
+
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script>
+      $(function () {
+    	  
+    	 // $('*').tooltip('disable');
+    	
+	  //Initialize Select2 Elements
+		$('.select2').select2();
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+          "paging": false,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": false,
+          "info": false,
+          "autoWidth": false
+        });
+        
+        
+        $(".toogle_nav_li").removeClass("active");
+        $("#inventory_li").addClass("active");
+       /*  $('#datepicker').datepicker({
+            autoclose: true,
+          });
+         */
+
+       
+          
+       
+      });
+    </script>	 
+	 <script>
+$(document).ready(function(){
+	 
+    $('[data-toggle="tooltip"]').tooltip();
+    
+    
+		 //var s=material.mfgLaborWarrantyYYMM.split(",");
+		 var s=$('#mfgLaborWarranty_id1').text().trim().split(",");
+		 
+			$('#mfgLaborWarranty_id1').html(s[0]+" year "+s[1]+" Months");
+
+	
+	//var s1=material.mfgMaterialWarrantyYYMM.split(",");
+	 var s1=$('#mfgMaterialWarranty_id1').text().trim().split(",");
+	$('#mfgMaterialWarranty_id1').html(s1[0]+" year "+s1[1]+" Months");
+	
+	//var s2=material.companyLaborWarrantyYYMM.split(",");
+	 var s2=$('#companyLaborWarranty_id1').text().trim().split(",");
+	$('#companyLaborWarranty_id1').html(s2[0]+" year "+s2[1]+" Months");
+	
+	//var s3=material.companyMaterialWarrantyYYMM.split(",");
+	 var s3=$('#companyMaterialWarranty_id1').text().trim().split(",");
+	$('#companyMaterialWarranty_id1').html(s3[0]+" year "+s3[1]+" Months");
+   
+
+	
+	var cost=Number($("#unitCost_id").html().trim());
+  	var charge=Number($("#Charge_id").html().trim());
+  	var markup=(cost/charge).toFixed(2);
+  	$("#Markup_id").html(markup);
+	
+	$("#barcode_print").click(function(){
+		//var data=$("#barcode_print_data").html();
+		var divToPrint=document.getElementById('barcode_print_data');
+		  var newWin=window.open('','Print-Window');
+
+		  newWin.document.open();
+
+		  newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+		  newWin.document.close();
+
+		  setTimeout(function(){newWin.close();},10);
+	});
+     
+	
+	
+	
+});
+
+
+</script>
+</body>
+</html>

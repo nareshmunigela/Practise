@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://thymeleaf.org">  
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ERGOS APP</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/x-icon" href="img/logo.png">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="css/skins/_all-skins.min.css">
+	<link href="plugins/toggle-master/bootstrap-toggle.css" rel="stylesheet">
+   <!-- DataTables -->
+    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+	<!-- Select2 -->
+  <link rel="stylesheet" href="plugins/select2/select2.min.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+  
+    <link rel="stylesheet" th:href="@{//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}" type="text/css"/>  
+<style>
+ .input_error{
+          border-color:red;
+          }
+
+</style>
+ </head>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Main Header -->
+ <div th:include="header"></div>
+  <!-- Left side column. contains the logo and sidebar -->
+
+ <div th:include="sidebar"></div>
+  <!-- Content Wrapper. Contains page content -->
+  
+ 
+
+  <!-- Content Wrapper. Contains page content -->
+
+<div class="content-wrapper">
+
+  <section class="content-header no-padding">
+<nav class="navbar no-margin">
+<div class="container-fluid">
+<ul class="nav navbar-nav">
+<li><a href="/sitesList"><i class="glyphicon glyphicon-search margin-r-10"></i>Search</a></li>
+<li class="active"><a href="/sitesList">Service Order Information
+<span class="action-tools pull-right margin-l-20"><button type="button">×</button></span></a>
+</li>
+<li><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+<span class="action-tools margin-r-5"><button type="button">+</button></span>New</a>
+<ul class="dropdown-menu">
+
+<li role="presentation"><a role="menuitem" tabindex="-1" href="/newserviceorder">+ New Service Order</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ Close Service Order</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ Dispath Board</a></li>
+</ul>
+</li>
+
+</ul>
+</div>
+</nav>
+</section>
+
+        
+        
+       <section class="margin-t-20">
+      <div class="row no-margin">
+	  <div class="col-xs-12 col-md-5 pull-right">
+                <div class="col-md-3 border-right">
+                  <div class="description-block">
+                    <h5 class="description-header">Status</h5>
+                    <span class="description-text text-yellow-green">Assigned</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-4 border-right">
+                  <div class="description-block">
+                    <h5 class="description-header">Order ID</h5>
+                    <span class="description-text"><span th:text="${soorder.serviceOrderNumber}"></span></span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-5">
+                  <div class="description-block">
+                    <h5 class="description-header">Booked Date</h5>
+                    <span class="description-text"><span th:text="${soDateCreated}"></span></span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+		</div>
+        </div>
+    </section>
+    
+        <!-- Content Header (Page header) -->
+        
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+		   <div class="col-md-12">
+		   <div class="nav-tabs-custom no-shadow">
+            <ul class="nav nav-tabs padding-t-10 bg-white margin-b-10">
+              <li class="active"><a href="#serviceorder" data-toggle="tab" aria-expanded="true">Service Order</a></li>
+              <li class=""><a href="#details" data-toggle="tab" aria-expanded="false">Details</a></li>
+              <li class=""><a href="#billing" data-toggle="tab" aria-expanded="false">Billing</a></li>
+			  <li class=""><a href="#history" data-toggle="tab" aria-expanded="true">History</a></li>
+              <li class=""><a href="#equipment" data-toggle="tab" aria-expanded="false">Equipment</a></li>
+              <li class=""><a href="#paperwork" data-toggle="tab" aria-expanded="false">Paper Work</a></li>
+			  <li class=""><a href="#notes" data-toggle="tab" aria-expanded="false">Notes</a></li>
+			  <li class="dropdown pull-right">
+                <a class="dropdown-toggle" style="background:#a2cc3a; color:#fff;" data-toggle="dropdown" href="#" aria-expanded="false">
+                  Update Status <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                  <li role="presentation" class="divider"></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                </ul>
+              </li>
+			  <li class="dropdown messages-menu pull-right">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding:5px 20px;">
+            
+            
+            
+            
+            
+            
+              <i class="fa fa-paperclip fa-2x fa-rotate-270 text-blue"></i>
+              <span class="label label-danger" style="position: absolute;right: 10px;top: 5px;" th:text="${prblumAttacments.size()}"></span>
+            </a>
+            
+             <ul class="dropdown-menu">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" id="viewProbAttchs" href="#">View Attachments</a></li>
+                 <!--  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Edit Attachment</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete Attachment</a></li> -->
+                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Add Attachment</a></li>
+                </ul>
+            
+            
+            </li>
+            </ul>
+			
+            <div class="tab-content no-padding">
+              <div class="tab-pane active" id="serviceorder">
+			  <div class="row no-margin">
+			  <div class="col-md-6 padding-none-r-10">
+                <div class="box no-border">
+				<div class="box-body">
+				<div class="col-md-7 no-padding">
+				<img class="img-lg margin-r-5" src="img/boxed-bg.jpg" alt="User profile picture">
+				<h4><strong><span th:text="${customer.name}"></span></strong></h4>
+				<p class="no-margin"> Rating (5)</p>
+				<ul class="list-inline">
+				  <li class="no-padding"><i class="fa fa-star text-orange"></i></li>
+                  <li class="no-padding"><i class="fa fa-star text-orange"></i></li>
+					<li class="no-padding"><i class="fa fa-star text-orange"></i></li>
+					<li class="no-padding"><i class="fa fa-star text-orange"></i></li>
+					<li class="no-padding"><i class="fa fa-star-half-o text-orange"></i></li>
+                  </ul>
+				</div>
+				<div class="col-md-5">
+				<h4><strong><span th:text="${customer.name}"></span></strong></h4>
+				
+				<p> <span th:text="${customer.address}"></span></p>
+				</div>
+				</div>
+				<!-- /.box-footer -->
+			<div class="box-footer text-right">
+			<div class="pull-left">
+			<button type="submit" class="btn-custom-aqua margin-r-10">AC Platinum</button>
+			<button type="submit" class="btn-custom-aqua margin-r-10">Premium</button>
+			<button type="submit" class="btn-custom-aqua margin-r-10">Gold Plumb</button>
+			</div>
+			<div class="pull-right text-right">
+			  <button type="submit" class="btn bg-blue-gradient margin-r-10">Ask to Join</button>
+                </div>	
+              </div> <!-- /.box-footer -->
+				</div>
+				
+				<div class="table-responsive bg-white">
+              <table id="example2" class="table table-striped">
+                    <thead>
+                      <tr>
+				  <th>Name</th>
+                  <!-- <th>Position</th> -->
+				  <th>Phone</th>
+                  <th>E-Mail</th>
+				   </tr>
+                    </thead>
+                <tbody>
+                
+                
+                <tr>
+				<td><span th:text="${contactObj.firstName}"></span>&nbsp;<span th:text="${contactObj.lastName}"></span><br/><label class="label-custom-yellowgreen margin-t-5">Primary</label></td>
+                 <!--  <td>V GRADE</td> -->
+				  <td><span th:text="${primaryPhoneNumber}"></span></td>
+				  <td><span th:text="${primaryEmail}"></span></td>
+				  </tr>
+				  
+                <!-- <tr>
+				<td>Contact Name</br><label class="label-custom-yellowgreen margin-t-5">Primary</label></td>
+                  <td>V GRADE</td>
+				  <td>9849984999</td>
+				  <td>email@gmail.com</td>
+				  </tr>
+				<tr>
+				<td>Jai</td>
+                  <td>V GRADE</td>
+				  <td>9849984999</td>
+				  <td>email@gmail.com</td>
+				  </tr> -->
+				
+				</tbody></table>
+            </div>
+				<div class="box bg-white margin-t-20 no-border">
+				<div class="box-header">
+				<ul class="nav nav-tabs">
+			  <li class="nav-item active">
+				<a href="#">Problem Details</a>
+			  </li>
+			   <li class="nav-item">
+				<a href="#">Photos</a>
+			  </li>
+			 <li class="nav-item">
+				<a href="#">Notes</a>
+			  </li> 
+			</ul>
+			</div>
+			<div class="box-body"> 
+			<div class="description-block">
+                    <h5 class="description-header">Problem:</h5>
+                    <span class="description-text"><span th:text="${soorder.openingCommments}"></span></span>
+                  </div>
+			</div>
+			</div>
+				
+				</div>
+				
+				<div class="col-md-6 padding-none-r-10">
+                <div class="box bg-aqua-gradient no-border">
+				<div class="box-body">
+				<div class="edit-icon"><i class="fa fa-2x fa-edit"></i></div>
+				<div class="row no-margin padding-y-10">
+				<div class="col-md-1 text-center no-padding"><i class="fa fa-2x fa-calendar"></i></div>
+                <div class="col-md-3 no-padding">
+                  <div class="description-block no-margin">
+				  <span class="description-text">Schedule Date</span>
+				  <h5 class="description-header"><span th:text="${soorder.scheduleStart}"></span></h5>
+                   </div>
+                  </div>
+                <!-- /.col -->
+				<div class="col-md-1 text-center no-padding"><i class="fa fa-2x fa-clock-o"></i></div>
+                <div class="col-md-3 no-padding">
+                  <div class="description-block no-margin">
+				  <span class="description-text">Schedule Time</span>
+				  <h5 class="description-header"><span th:text="${slot.description}"></span></h5>
+                   </div>
+                  </div>
+				 <!-- /.col -->
+				<div class="col-md-3 no-padding">
+                  <div class="description-block">
+				  <h5 class="description-header"><span th:text="${soorder.scheduledDays}"></span></h5>
+                   </div>
+                  </div> 
+                </div>
+				<div class="row no-margin padding-y-10">
+				<div class="col-md-1 text-center no-padding"><img src="img/user.png" class="user-image img-circle" alt="User Image"></div>
+                <div class="col-md-3 no-padding">
+                  <div class="description-block no-margin">
+				  <span class="description-text">Technician</span>
+				  <h5 class="description-header"><span th:text="${emp.name}"></span></h5>
+                   </div>
+                  </div>
+                <!-- /.col -->
+				<div class="col-md-1 text-center no-padding"><img src="img/user.png" class="user-image img-circle" alt="User Image"></div>
+                <div class="col-md-3 no-padding">
+                  <div class="description-block no-margin">
+				  <span class="description-text">Sales Man</span>
+				  <h5 class="description-header">Sales Man Name</h5>
+                   </div>
+                  </div>
+				  </div>
+				</div>
+				<!-- /.box-footer -->
+			<div class="box-footer bg-transparent text-right">
+			<div class="pull-left">
+			<div class="checkbox text-white no-margin">
+                  <label>
+                    <input type="checkbox"> Wait List
+                  </label>
+                </div>
+			</div>
+			<div class="pull-right text-right">
+			  <button type="submit" class="btn bg-white text-aqua margin-r-10">Confirm Order</button>
+                </div>	
+              </div> <!-- /.box-footer -->
+				</div>
+				
+				<div class="box no-border">
+				<div class="box-body">
+				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                  <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                  </ol>
+                <div class="carousel-inner">
+                  <div class="item active">
+				  <div class="row no-margin">
+                    <div class="col-md-offset-1 col-md-5 col-xs-12 padding-none-r-5">
+				<div class="info-box-custom no-margin">
+				<span class="info-box-custom-icon pull-left"><i class="fa fa-usd text-gray"></i></span>
+				<div class="info-box-custom-content-right">
+				  <span class="info-box-custom-text">Revenue</span>
+				  <span class="info-box-custom-number">$950.50</span>
+				</div>
+				</div>
+				</div><!-- /.Col -->
+				<div class="col-md-5 col-xs-12 padding-none-l-5">
+				<div class="info-box-custom no-margin">
+				<span class="info-box-custom-icon pull-left"><i class="fa fa-briefcase text-gray"></i></span>
+				<div class="info-box-custom-content-right">
+				  <span class="info-box-custom-text">Balance</span>
+				  <span class="info-box-custom-number">$950.50</span>
+				</div>
+				</div>
+				</div><!-- /.Col -->
+				</div>
+				<div class="row no-margin">
+				<div class=" col-md-offset-1 col-md-5 col-xs-12 padding-none-r-5 ">
+				<div class="info-box-custom no-margin">
+				<span class="info-box-custom-icon pull-left"><i class="fa  fa-shopping-cart text-gray"></i></span>
+				<div class="info-box-custom-content-right">
+				  <span class="info-box-custom-text">Service Orders</span>
+				  <span class="info-box-custom-number">105</span>
+				</div>
+				</div>
+				</div><!-- /.Col -->
+				<div class="col-md-5 col-xs-12 padding-none-l-5">
+				<div class="info-box-custom no-margin">
+				<span class="info-box-custom-icon pull-left"><i class="fa  fa-warning text-gray"></i></span>
+				<div class="info-box-custom-content-right">
+				  <span class="info-box-custom-text">Complaints</span>
+				  <span class="info-box-custom-number">57</span>
+				</div>
+				</div>
+				</div><!-- /.Col -->
+				</div>
+                  </div>
+                  
+                </div>
+                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                  <span class="fa fa-angle-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                  <span class="fa fa-angle-right"></span>
+                </a>
+              </div>
+				
+				
+				</div>
+				</div>
+				
+				<div class="box no-border">
+				<div class="box-body">
+				<div class="col-md-6 col-sm-6 col-xs-12 padding-none-r-5">
+				<div class="info-box-custom  bg-gray-light">
+				<span class="info-box-custom-icon pull-right"><i class="fa  fa-credit-card"></i></span>
+				<div class="info-box-custom-content-left">
+				  <span class="info-box-custom-text">Payment Type</span>
+				  <span class="info-box-custom-number"><span th:text="${pyamentterms.description}"></span></span>
+				</div>
+				</div>
+				</div><!-- /.Col -->
+				<div class="col-md-6 col-sm-6 col-xs-12 padding-none-l-5">
+				<div class="info-box-custom  bg-gray-light">
+				<span class="info-box-custom-icon pull-right"><i class="fa  fa-bullhorn"></i></span>
+				<div class="info-box-custom-content-left">
+				  <span class="info-box-custom-text">Marketing Campaign</span>
+				  <span class="info-box-custom-number"><span th:text="${marketingCampaign.description}"></span></span>
+				</div>
+				</div>
+				</div><!-- /.Col -->
+				<div class="col-md-6 col-sm-6 col-xs-12 padding-none-r-5 ">
+				<div class="info-box-custom  bg-gray-light">
+				<span class="info-box-custom-icon pull-right"><i class="fa  fa-shield"></i></span>
+				<div class="info-box-custom-content-left">
+				  <span class="info-box-custom-text">Assigned Company</span>
+				  <span class="info-box-custom-number">Cmp Name</span>
+				</div>
+				</div>
+				</div><!-- /.Col -->
+				<div class="col-md-6 col-sm-6 col-xs-12 padding-none-l-5">
+				<div class="info-box-custom  bg-gray-light ">
+				<span class="info-box-custom-icon pull-right"><i class="fa  fa-building-o"></i></span>
+				<div class="info-box-custom-content-left">
+				  <span class="info-box-custom-text">Property Type</span>
+				  <span class="info-box-custom-number"><span th:text="${property.description}"></span></span>
+				</div>
+				</div>
+				</div><!-- /.Col -->
+				</div>
+				</div>
+				
+				</div>
+				</div>
+				<div class="row no-margin">
+				<div class="col-md-12 padding">
+		  <ul class="create-nav-list list-inline text-center">
+    <li class="active"><i class="fa  fa-check-circle-o fa-lg margin-r-5"></i><a href="#">Booked</a> ---------</li>
+    <li><i class="fa  fa-check-circle-o fa-lg margin-r-5"></i><a href="#">Assigned</a> ---------</li>
+	<li><i class="fa  fa-check-circle-o fa-lg margin-r-5"></i><a href="#">Travel</a> ---------</li>
+	<li><i class="fa  fa-check-circle-o fa-lg margin-r-5"></i><a href="#">Bid</a> ---------</li>
+	<li><i class="fa  fa-check-circle-o fa-lg margin-r-5"></i><a href="#">WIP</a> ---------</li>
+    <li class="disabled"><i class="fa  fa-check-circle-o fa-lg margin-r-5"></i><a href="#">Accomplished</a></li>
+    </ul> </div>
+				</div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="details">
+                <!-- The timeline -->
+               <div class="row no-margin">
+			  <div class="col-md-4 padding-none-r-10">
+                <div class="box no-border pad">
+				<div class="box-header">
+				<h3 class="box-title text-blue"><b>Customer Information</b></h3>
+				</div>
+				<div class="box-body">
+				<div class="col-md-6 no-padding">
+				<h4 class="no-margin"><strong><span th:text="${customer.name}"></span></strong></h4>
+				 
+				<!-- <p> Customer Since: <span th:text="${customer.customerSince}"></span></p> -->
+				
+				<p><span th:text="${relationshipType}"></span></p>
+				</div>
+				<div class="col-md-6">
+				<p class="no-margin"> Location</p>
+				<h4 class="no-margin"> <span th:text="${customer.address}"></span> </h4>
+				</div>
+				</div>
+				<!-- /.box-footer -->
+			<div class="box-footer">
+			<div class="pull-left">
+			
+				  
+			<a href="#"><i class="fa fa-phone margin-r-5"></i><span th:text="${primaryPhoneNumber}"></span></a>
+			</div>
+			<div class="pull-right text-right">
+			  <a href="#"><i class="fa fa-envelope-o margin-r-5"></i><span th:text="${primaryEmail}"></span></a>
+			  </div>	
+              </div> <!-- /.box-footer -->
+				</div>
+				</div>
+				
+				<div class="col-md-4 padding-none-r-10">
+                <div class="box no-border pad">
+				<div class="box-header">
+				<h3 class="box-title text-blue"><b>Site Information</b></h3>
+				</div>
+				<div class="box-body">
+				 
+				  <img class="img-lg margin-r-5" th:src="${'https://maps.googleapis.com/maps/api/staticmap?center='+site.siteAddress+'&zoom=15&size=100x100&maptype=roadmap&key=AIzaSyCqnk6q1an9ZcAXuzQqLnJmNGFeyNsLeOA'}"/> 
+				<div class="col-md-8">
+				 <span th:text="${site.siteAddress}"></span>
+				</div>
+				</div>
+				</div>
+				</div>
+				
+				<div class="col-md-4 padding-none-r-10">
+                <div class="box no-border pad">
+				<div class="box-header">
+				<h3 class="box-title text-blue"><b>Membership</b></h3>
+				</div>
+				<div class="box-body text-center">
+				<div class="col-md-4 padding-none-r-10">
+				  <img class="profile-user-img img-responsive" src="img/gold.svg" alt="Gold" style="border:none;width:50px;">
+				<h4 class="text-center">Gold</h4>
+				</div>
+				<div class="col-md-4 padding-none-r-10">
+				  <img class="profile-user-img img-responsive" src="img/platinum.svg" alt="Platinum" style="border:none;width:50px;">
+				<h4 class="text-center">AC Platinum</h4>
+				</div>
+				<div class="col-md-4 padding-none-r-10">
+				  <img class="profile-user-img img-responsive" src="img/premium.svg" alt="Premium" style="border:none;width:50px;">
+				<h4 class="text-center">Premium</h4>
+				</div>				
+				</div>
+				<!-- /.box-footer -->
+			<div class="box-footer">
+			 <div class="pull-right text-right">
+			  <button type="submit" class="btn bg-blue-gradient margin-r-10">Ask to Join</button>
+                </div>	
+              </div> <!-- /.box-footer -->
+				</div>
+				</div>
+				
+				</div>
+              </div>
+              <!-- /.tab-pane -->
+
+              <div class="tab-pane" id="billing">
+               <div class="row no-margin">
+			   <div class="col-md-7 padding-none-r-10">
+                <div class="box no-border">
+				<div class="box-body">
+				<div class="col-md-7 no-padding">
+				<img class="img-lg margin-r-5" src="img/boxed-bg.jpg" alt="User profile picture">
+				<h4 class="no-margin"><strong><span th:text="${customer.name}"></span></strong></h4>
+				 
+				<p> Customer Since: <span th:text="${customer.customerSince}"></span></p>
+				
+				</div>
+				<div class="col-md-5">
+				<p> Billing Address</p>
+				<h4 class="no-margin"> <span th:text="${customer.address}"></span> </h4>
+				</div>
+				</div>
+				</div>
+				
+				<div class="box box-info no-border no-shadow">
+				<div class="edit-icon bg-blue-gradient"><i class="fa fa-plus margin-r-5"></i>Add Contacts</div>
+				<div class="table-responsive bg-white">
+              <table id="example2" class="table table-striped">
+                    <thead>
+                      <tr>
+				  <th>Name</th>
+                  <!-- <th>Position</th> -->
+				  <th>Phone</th>
+                  <th>E-Mail</th>
+				   </tr>
+                    </thead>
+                <tbody>
+                
+                <tr>
+				<td><span th:text="${contactObjBilling.firstName}"></span>&nbsp;<span th:text="${contactObjBilling.lastName}"></span><br/><label class="label-custom-yellowgreen margin-t-5">Primary</label></td>
+                 <!--  <td>V GRADE</td> -->
+				  <td><span th:text="${primaryPhoneNumberBilling}"></span></td>
+				  <td><span th:text="${primaryEmailBilling}"></span></td>
+				  </tr>
+                
+				
+				</tbody></table>
+            </div>
+				</div>
+				</div>
+				<div class="col-md-5 padding-none-r-10">
+                <div class="box no-border pad">
+				<div class="box-header">
+				<h3 class="box-title text-blue"><b>Notes</b></h3>
+				</div>
+				<div class="box-body">
+				<p style="min-height:100px;height: auto" th:text="${serviceOrderNotes}"></p>	
+				
+							
+				</div>
+				<!-- /.box-footer -->
+			<div class="box-footer">
+			 <div class="pull-left">
+			<div class="checkbox no-margin">
+                  <label>
+                    <input type="checkbox"> Do Not Service
+                  </label>
+                </div>
+			</div>	
+              </div> <!-- /.box-footer -->
+				</div>
+				</div>
+				
+				</div>
+				
+				<div class="row no-margin">
+				<div class="col-md-12 no-padding">
+                <div class="box no-border pad">
+				<div class="box-header">
+				<h3 class="box-title text-blue"><b>Payments</b></h3>
+				</div>
+				<div class="box-body text-center">
+				<ul class="list-group col-md-3 no-padding margin-t-10">
+                <li class="list-group-item">
+                  <b>Bank Accounts</b>
+                </li>
+                <li class="list-group-item">
+                  <b>Credit Cards</b>
+                </li>
+                </ul>
+				<div class="col-md-9">
+				</div>
+				</div>
+				</div>
+				</div>
+				</div>
+              </div>
+              <!-- /.tab-pane -->
+			   
+			   <div class="tab-pane" id="history">
+               <div class="row no-margin">
+			   <div class="col-md-12 padding-none-r-10">
+               
+				<div class="box box-info no-border no-shadow">
+				<div class="table-responsive bg-white">
+              <table id="example2" class="table table-striped">
+                    <thead>
+                      <tr>
+				  <th>Service Order Number</th>
+                  <th>Date</th>
+				  <th>Technician</th>
+                  <th>Problem</th>
+				  <th>Invoice Amount</th>
+				  <th>Status</th>
+				  <th>Action</th>
+				   </tr>
+                    </thead>
+                <tbody th:each="stude :${orders}">
+                <tr>
+				<td th:text="${stude.serviceOrderNumber}"> </td>
+				  <td th:text="${stude.createdDate}"> </td>
+				  <td th:text="${stude.labour}"> </td>
+				  <td th:text="${stude.openingCommments}"> </td>
+				  <td th:text="${stude.totalInvoice}"> </td>
+				   <td th:text="${stude.soldBy}"> </td>
+				  <td><button type="submit" th:id="${stude.serviceOrderId}" class="btn bg-blue-gradient audit" data-toggle="modal" >Audit</button></td>
+				  </tr>
+				 
+				</tbody></table>
+            </div>
+				</div>
+				</div>
+				</div>
+				</div>
+			    <!-- /.tab-pane -->
+			 
+			 
+			 
+			 		<div class="tab-pane" id="equipment">
+               <div class="row no-margin">
+			   <div class="col-md-12 padding-none-r-10">
+                 
+                 <div class="nav-tabs-custom bg-white">
+            <!-- Tabs within a box -->
+            <ul class="nav nav-tabs pull-right">
+              <li><a href="#grid-view" data-toggle="tab"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-th-large"></i>
+                </button></a></li>
+				<li class="active"><a href="#list-view" data-toggle="tab"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-th-list"></i>
+                </button></a></li>
+              
+              <li class="pull-left header margin-t-5 text-blue"><i class="fa fa-wrench"></i><b>Equipment</b><span class="text-black margin-l-5">at the Site</span></li>
+			  <li class="pull-right text-right">
+				<a href="#" data-toggle="modal" data-target="#myModal">
+			  <button type="submit" class="btn bg-blue-gradient margin-r-10"><i class="fa fa-plus-circle fa-lg margin-r-5"></i>Add Equipment</button></a>
+			  </li>
+            </ul>
+            <div class="tab-content no-padding">
+              <div class="chart tab-pane" id="grid-view">
+			 <div class="row no-margin img-grid" >
+			 
+			 
+			 
+			 
+			 <div class="col-md-12 text-center">
+			 <div class="col-md-3" style="border: 1px solid #ccc;margin-right:20px;margin-top:20px;padding-top:20px;"  th:each="equipment : ${equipments}">
+			 <div class="" >
+			 <span th:if="${equipment.imgStr==null}">
+			<img  class=" margin-r-5 viewequ"   th:id="${equipment.equipmentId}" style="height:250px;width:100%;"   src="img/equipment-img.jpg"  th:title="${equipment.name}"  >
+			 </span>
+			 <span th:if="${equipment.imgStr!=null}">
+			 
+			 <img class="margin-r-5 viewequ"   th:id="${equipment.equipmentId}" style="height: 250px;width:100%;" th:src="@{'data:image/jpeg;base64,'+${equipment.imgStr}}"  th:title="${equipment.name}" >
+			 </span>
+			</div>
+			 <div class="dropdown imgover-btn-dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                 <i class="fa fa-ellipsis-v fa-lg text-white"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" th:id="${equipment.equipmentId}"  class="copyEqup"  href="#">Duplicate</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
+                </ul>
+              </div>
+			
+			  <div class="pull-left">
+			  <b class="pull-left">Product Name</b> <br/>
+			   <span class="pull-left" th:text="${equipment.name}"></span> </div>
+			  </div>
+			 </div>
+			 </div>
+			   
+			  </div>
+              <div class="tab-pane active" id="list-view" >
+			  <div class="box-body text-center">
+				 
+				<div class="col-md-12">
+				<div class="col-md-6 margin-t-20" th:each="equipment : ${equipments}">
+				
+				<div class="col-md-4" style="border: 1px solid #ccc;padding: 20px;height:250px;"> 
+				 <span th:if="${equipment.imgStr==null}">
+			<img  class="img-responsive margin-r-5 viewequ" style="height: 158px" th:id="${equipment.equipmentId}"   src="img/equipment-img.jpg"  th:title="${equipment.name}"  >
+			 </span>
+			 <span th:if="${equipment.imgStr!=null}">
+			 
+			 <img class="img-responsive margin-r-5 viewequ" style="height: 158px" th:id="${equipment.equipmentId}" th:src="@{'data:image/jpeg;base64,'+${equipment.imgStr}}"  th:title="${equipment.name}" >
+			 </span>
+			 
+			 
+			 </div>
+				<div class="col-md-8" style="border: 1px solid #ccc;padding: 20px;height: 250px;text-align: left;">
+				<div><span >Equipment Type:</span> <span th:text="${equipment.type}"></span> </div><br/>
+				<div>  <span>Manufacturer:</span> <span th:text="${equipment.manufacturer}"></span></div> <br/>
+				<div> <span>Serial :</span>  <span th:text="${equipment.serialNumber}"></span></div> <br/>
+				 <div> <span>Warranty:</span> <span th:text="${equipment.warranty}"></span></div><br/> 
+				<div> <span>Installation Date:</span>  <span th:text="${equipment.installationDate}"></span></div> <br/>
+				
+				</div>
+				<div class="dropdown imgover-btn-dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                 <i class="fa fa-ellipsis-v fa-lg text-white"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" th:id="${equipment.equipmentId}"  class="copyEqup"  href="#">Duplicate</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
+                </ul>
+              </div>
+				</div>
+				
+				</div>
+				
+              
+             			
+				</div>
+			</div>
+              
+          </div>
+			   
+			   
+               </div>
+                
+                
+                
+                
+				</div>
+				</div>
+				</div>
+			 
+			 
+			 
+			    <!-- /.tab-pane -->
+             <!-- Modal -->
+				<div id="myModal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Add Equipment <span id="err_msg_equp_modal" class="text-right margin-l-20 text-red"></span></h4>
+					
+				
+				</div>
+				
+				<div class="modal-body">
+				<form id="saveEquipmentForm"  >
+				<section data-step="4">
+			  <div class="row">
+			  
+			  <div class="col-md-6">
+			   <div class="form-group">
+                  <label> Equipment Name</label>
+                  <input type="text" id="eqName" name="name" class="form-control" placeholder="Enter Name" required="required">
+                  
+                 <!--  <input type="hidden" name="soId"  th:value="${soorder.serviceOrderId}"/> -->
+                  <input type="hidden" name="siteID"  th:value="${soorder.siteId}"/>
+				</div>
+				<div class="form-group">
+                  <label> Description</label>
+                   
+                  
+                <textarea class="form-control" id="eqDesc" rows="2" name="description" placeholder="Enter Description"></textarea>
+				</div>
+				
+                <div class="form-group">
+                  <label>Equipment Type</label>
+                  <select class="form-control select2 select2-hidden-accessible" name="equipmentTypeID"  style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  <option th:each="eqtype : ${equipmetTypes}"
+                            th:value="${eqtype.equipmentTypeId}"
+                            th:utext="${eqtype.description}"/>
+                  </select></div>
+                  
+                   <div class="row no-margin">
+				  <div class="form-group col-md-6 padding-none-r-5">
+                  <label> Manufacturer </label>
+                  <input type="text" id="eqManf" name=manufacturer class="form-control" placeholder="Enter "  autofocus="">
+				</div>
+				<div class="form-group col-md-6 padding-none-l-5">
+                  <label> Location</label>
+                  <input type="text" id="eqLoc" name="location" class="form-control" placeholder="Enter "  autofocus="">
+				</div>
+				</div>
+                  
+				  <div class="row no-margin">
+				  <div class="form-group col-md-6 padding-none-r-5">
+                  <label> Model Number </label>
+                  <input type="text" id="eqModel" name="model" class="form-control" placeholder="Enter " autofocus="">
+				</div>
+				<div class="form-group col-md-6 padding-none-l-5">
+                  <label> Serial Number</label>
+                  <input type="text"  id="eqSno" name="serialNumber" class="form-control" placeholder="Enter "  autofocus="">
+				</div>
+				</div>
+				<div class="row no-margin">
+				<div class="checkbox col-md-6 no-padding">
+                  <label>
+                    <input type="checkbox" name="installedByUs"> Installed by Us
+                  </label>
+                </div>
+				<div class="form-group col-md-6 no-padding">
+                  <label> Estimated Age in Years</label>
+                  <input type="text" id="eqAge" name="estimatedAgeInYears" class="form-control" placeholder="Enter "  autofocus="">
+				</div>
+				</div>
+				<div class="row no-margin" id="installed" style="display: none;">
+				<div class="form-group col-md-6 padding-none-r-5">
+                <label>Date of Installation</label>
+
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="date"   name="installationDate1" id="installationDate_id"  class="form-control pull-right datepicker">
+                </div>
+                <!-- /.input group -->
+              </div>
+				  <div class="form-group col-md-6 no-padding">
+                  <label> Service Order No</label>
+                  <input type="text" name="soId"  class="form-control" placeholder="Enter "  autofocus="">
+				</div> 
+				</div>
+				
+				
+				
+				
+				<div class="row no-margin">
+				<div class="checkbox col-md-6 padding-none-r-5 no-margin">
+                  <label>
+                    <input type="checkbox" name="mfrmetwarnt" > Manufacturer Material Warranty
+                  </label>
+				  <div class="input-group date" id="metdate" style="display: none;">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="date"   name="mfgMaterialWarrantyExpDate1" id="mfgMaterialWarrantyExpDate_id"  class="form-control pull-right datepicker">
+                </div>
+                </div>
+				<div class="checkbox col-md-6 padding-none-l-5 no-margin">
+                  <label>
+                    <input type="checkbox" name="mfrlabwarnt"> Manufacturer Labor Warranty
+                  </label>
+				  <div class="input-group date" id="lbrdate" style="display: none;">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="date"    name="mfgLaborWarrantyExpDate1"  id="mfgLaborWarrantyExpDate_id" class="form-control pull-right datepicker">
+                </div>
+                </div>
+				</div>
+				
+				
+				
+				<div class="row no-margin">
+				<div class="checkbox col-md-6 padding-none-r-5 no-margin">
+                  <label>
+                    <input type="checkbox" name="cmpmetwarnt" > Company Material Warranty
+                  </label>
+				  <div class="input-group date" id="cmpmetdate" style="display: none;">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="date"    name="companyMaterialWarrantyExpDate1" id="companyMaterialWarrantyExpDate_id" class="form-control pull-right datepicker">
+                </div>
+                </div>
+				<div class="checkbox col-md-6 padding-none-l-5 no-margin">
+                  <label>
+                    <input type="checkbox" name="cmplabwarnt"> Company Labor Warranty
+                  </label>
+				  <div class="input-group date" id="cmplbrdate" style="display: none;">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="date"    name="companyLaborWarrantyExpDate1" id="companyLaborWarrantyExpDate_id" class="form-control pull-right datepicker">
+                </div>
+                </div>
+				</div>
+				
+				
+				</div>
+				<div class="col-md-6">
+		<div class="box box-solid no-shadow no-border">
+            <div class="box-body">
+			
+				
+				   <div class="form-group">
+                  <label> Tag</label>
+                  <input type="text" id="tag" name="" class="form-control" placeholder="Enter "  autofocus="">
+				</div>  
+			<div class="form-group">
+                  <div style="padding: 10px;border:2px dotted #ccc;border-radius: 10px;" id="uploadimgs">
+                  <p class="help-block">Upload Corresponding Images,if any</p>
+                  
+                  </div>
+				  <input type="file" id="equipmentFile" style="display: none;">
+			</div>
+			
+			<ul class="list-unstyled" id="equipmentfiles" style="display: none;">
+</ul>
+             
+            </div>
+            
+           
+            <!-- /.box-body -->
+          </div>
+          </div>
+          </div>
+          </section>
+          
+           </form>				
+				</div>
+			 
+				<div class="modal-footer">
+				<button type="button" class="btn btn-default margin-r-10" data-dismiss="modal">Cancel</button>
+				<button type="submit" class="btn btn-success" id="saveEquipment">Save & Continue</button>
+				</div>
+				</div>
+				</div><!-- /.model -->
+				
+				
+				
+				
+				
+				
+				
+			 
+            </div>
+            
+            
+            <div id="viewModal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">View Equipment</h4>
+				</div>
+				<div class="modal-body">
+				
+			  
+			  
+			    <div class="lodar">
+              <div class="box box-danger no-border no-shadow">
+            <div class="box-header">
+               
+            </div>
+            <div class="box-body">
+            
+            </div>
+            <!-- /.box-body -->
+            <!-- Loading (remove the following to stop the loading)-->
+            <div class="overlay">
+              <i class="fa fa-spinner fa-spin"></i>
+            </div>
+            <!-- end loading -->
+          </div>
+            </div>
+            
+            
+				<div class="row eqDetails">
+				<div class="col-md-4 no-padding">
+				<dl class="dl-horizontal" id="eqDetails">
+                 
+              </dl>
+				</div>
+				<div class="col-md-8">
+				<h4 class="no-margin text-blue"><strong>Installation Details</strong></h4>
+				<dl class="dl-horizontal" id="eqInstaldetails">
+				 
+				</dl>
+				<h4 class="no-margin text-blue"><strong>Warranty Details</strong></h4>
+				<dl class="dl-horizontal" id="eqWarentydetails">
+				 
+				</dl>
+				</div>
+			</div>
+				<div class="row">
+				<div class="col-md-2">
+				<div class="flex-box equipmentimgs">
+				
+				 
+				</div>
+				</div>
+				<div class="col-md-10">
+				<img class="img-responsive" id="zoomimg" src=" "   style="width 100%;">
+				</div>
+				</div>
+				
+				<div class="modal-footer">
+				<button type="button" class="btn btn-default margin-r-10" data-dismiss="modal">Cancel</button>
+			  
+				</div>
+				</div>
+				</div>
+				</div>
+				
+				
+				</div>
+				
+				
+				
+				 <div id="problemModal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"  >View all attachments</h4>
+				</div>
+				<div class="modal-body">
+				
+			  
+			  
+			  
+			  <div class="table-responsive">
+              <table id="somedia" class="table table-condensed borderless">
+                    <thead>
+                      <tr>
+				  <th>Title</th>
+                  <th>Category</th>
+                  <th>File Type</th>
+				  <th>Size</th>
+				  <th>Last Updated</th>
+				  <th>&nbsp; </th>
+				  </tr>
+                    </thead>
+                <tbody>
+                <div  th:each="mediadto : ${prblumAttacments}">
+				<tr class="accordion-toggle" data-toggle="collapse" th:attr="data-target='#'+${mediadto.mediaId}">
+                
+				  <td><!-- ${mediadto.fileName} -->
+				  		<span th:if="${mediadto.fileType.equals('video')}">
+			<video   class="img-sm" controls   th:src="@{'data:video/mp4;base64,'+${mediadto.imgStr}}"   th:title="${mediadto.fileName}" ></video>
+			 </span>
+			 <span th:if="${mediadto.fileType.equals('image')}">
+			 
+			<img   class="img-sm" th:src="@{'data:image/jpeg;base64,'+${mediadto.imgStr}}"  data-toggle="tooltip" data-original-title="${mediadto.fileName}"   ></img>
+			 </span>
+			<span th:if="${mediadto.fileType.equals('audio')}">
+			 
+			<audio  class="img-sm"  controls="controls"  th:src="@{'data:audio/mp3;base64,'+${mediadto.imgStr}}"     ></audio>
+			 </span>
+			 
+			 <span th:if="${mediadto.fileType.equals('pdf')}">
+			 <i class="fa fa-1mx text-green fa-file-pdf-o"></i><span th:text="${mediadto.fileName}"></span>
+			 </span>
+
+			 <span th:if="${mediadto.fileType.equals('txt')}">
+			 <i class="fa fa-1mx text-green fa-file-text-o"></i><span th:text="${mediadto.fileName}"></span>
+			 </span>
+
+			 <span th:if="${mediadto.fileType.equals('xls')}">
+			 <i class="fa fa-1mx text-green fa-file-excel-o"></i><span th:text="${mediadto.fileName}"></span>
+			 </span>
+			
+				  
+				  </td>
+				  <td>
+				  		<span th:if="${mediadto.mediaCategoryId==1}">ProblemDescription
+			 			</span>
+			 			<span th:if="${mediadto.mediaCategoryId==2}">TaxExempt
+			 			</span>
+				  </td>
+				  <td  th:text="${mediadto.fileType}"></td>
+				  <td th:text="${mediadto.mediaFileSize}"></td>
+				  <td th:text="${mediadto.updatedDate}"></td>
+				  <!-- <td class="accordion-toggle" data-toggle="collapse" data-target="#media-id"><i class="fa fa-caret-down fa-lg margin-r-10"></i></td> -->
+				  
+				  <td><i class="fa fa-caret-down fa-lg margin-r-10"></i></td>
+				  </tr>
+				 
+				 
+				<tr>
+				 
+			  		<td colspan="12" class="hiddenrow no-padding text-center"  data-toggle="tooltip" data-original-title="View Attachment">
+			  			<div class="accordian-body collapse" th:id="${mediadto.mediaId}"> 
+
+											  		<span th:if="${mediadto.fileType.equals('video')}">
+			<video class="img-xlg" controls  th:src="@{'data:video/mp4;base64,'+${mediadto.imgStr}}"   th:title="${mediadto.fileName}" ></video>
+			 </span>
+			 <span th:if="${mediadto.fileType.equals('image')}">
+			 
+			<img   class="img-xlg" th:src="@{'data:image/jpeg;base64,'+${mediadto.imgStr}}"  data-toggle="tooltip" data-original-title="${mediadto.fileName}"   ></img>
+			 </span>
+			<span th:if="${mediadto.fileType.equals('audio')}">
+			 
+			<audio class="img-xlg" controls="controls"  th:src="@{'data:audio/mp3;base64,'+${mediadto.imgStr}}"     ></audio>
+			 </span>
+			 
+			 <span th:if="${mediadto.fileType.equals('pdf')}">
+			 <i class="fa fa-1mx text-green fa-file-pdf-o"></i><span th:text="${mediadto.fileName}"></span>
+			 </span>
+
+			 <span th:if="${mediadto.fileType.equals('txt')}">
+			 <i class="fa fa-1mx text-green fa-file-text-o"></i><span th:text="${mediadto.fileName}"></span>
+			 </span>
+
+			 <span th:if="${mediadto.fileType.equals('xls')}">
+			 <i class="fa fa-1mx text-green fa-file-excel-o"></i><span th:text="${mediadto.fileName}"></span>
+			 </span>
+			
+
+						</div> 
+			  		</td> 
+			  	</tr>
+				
+				</div>
+				 </tbody></table>
+            </div>
+			  
+			  
+			  
+			  
+			   <!-- <div class="tab-content no-padding">
+              <div class="chart tab-pane active" id="grid-view">
+			 <div class="row no-margin img-grid" >
+			     
+            
+             <div class="col-md-2 col-sm-12 pad" th:each="mediadto : ${prblumAttacments}">
+			 <span th:if="${mediadto.fileType.equals('video')}">
+			<video   width="200" controls style="height:50px; width:50px" th:src="@{'data:video/mp4;base64,'+${mediadto.imgStr}}"   th:title="${mediadto.fileName}" ></video>
+			 </span>
+			 <span th:if="${mediadto.fileType.equals('image')}">
+			 
+			<img   width="200"   style="height:50px; width:50px" th:src="@{'data:image/jpeg;base64,'+${mediadto.imgStr}}"   th:title="${mediadto.fileName}" ></img>
+			 </span>
+			<span th:if="${mediadto.fileType.equals('audio')}">
+			 
+			<audio  controls="controls"  th:src="@{'data:audio/mp3;base64,'+${mediadto.imgStr}}"  th:title="${mediadto.fileName}" ></audio>
+			 </span>
+			 
+			 <span th:if="${mediadto.fileType.equals('pdf')}">
+			 <i class="fa fa-1mx text-green fa-file-pdf-o"></i><span th:text="${mediadto.fileName}"></span>
+			
+			 </span>
+			 <span th:if="${mediadto.fileType.equals('txt')}">
+			 <i class="fa fa-1mx text-green fa-file-text-o"></i><span th:text="${mediadto.fileName}"></span>
+			
+			 </span>
+			 <span th:if="${mediadto.fileType.equals('xls')}">
+			 <i class="fa fa-1mx text-green fa-file-excel-o"></i><span th:text="${mediadto.fileName}"></span>
+			 
+			 </span>
+			 </div>
+			 
+			 </div></div></div> -->
+			 </div>
+				
+				<div class="modal-footer">
+				<button type="button" class="btn btn-default margin-r-10" data-dismiss="modal">Cancel</button>
+			  
+				</div>
+				</div>
+				</div>
+				</div>
+				
+				
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				<!-- Modal -->
+<div id="auditModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">Service Order No: <span id="sono_audit"></span></h4>
+</div>
+<div class="modal-body">
+<div id="timeline">
+<!-- The timeline -->
+<ul class="timeline timeline-inverse">
+<!-- timeline time label -->
+<li class="time-label"><span   class="bg-red sobooked_audit"> </span></li>
+<!-- timeline item -->
+<li><i class="fa fa-wrench bg-yellow"></i>
+<div class="timeline-item">
+<h3 class="timeline-header"><a href="#">Service Order booked on  </a> <span   class="sobooked_audit"></span></h3>
+</div>
+</li>
+<!-- timeline item -->
+<li><i class="fa fa-user bg-aqua"></i>
+<div class="timeline-item">
+<h3 class="timeline-header no-border"><a href="#">Technician assigned on</a><!--  10 Feb. 2019 --></h3>
+</div>
+</li>
+<!-- timeline item -->
+<li><i class="fa fa-check bg-green"></i>
+<div class="timeline-item">
+<h3 class="timeline-header"><a href="#">Accomplished on</a><!--  20 Feb. 2019 --></h3>
+
+</div>
+</li>
+<!-- timeline time label -->
+<li class="time-label"><span class="bg-green"><span   class="sobooked_audit"></span></span> </li>
+</ul>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default margin-r-10" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+				
+				
+				
+				
+				
+				
+				
+            <!-- /.tab-content -->
+          </div>
+		   
+		  
+		  </div><!-- /.col -->
+		  
+		  </div><!-- /.row -->
+        </section><!-- /.content -->
+        
+        
+        
+        
+        
+        <form action="/sodrderview">
+				<input type="hidden" id="soId" name="soId" th:value="${soid}"/>
+				<input type="hidden" name="tabSet" value="equipment"/>
+				<input type="submit" id="submitso" style="display: none;"/>
+				
+				</form>
+				<input type="hidden" id="tabSet" name="tabSet" th:value="${tabSet}"/>
+				
+				
+				
+      </div><!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 2.2.3 -->
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<!-- Select2 -->
+<script src="plugins/select2/select2.full.min.js"></script>
+<!-- DataTables -->
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+	<!-- bootstrap datepicker -->
+<!-- <script src="plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script> -->
+<!-- bootstrap time picker -->
+
+  <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script>
+<!-- <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script> -->
+
+	<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- AdminLTE App -->
+<script src="js/app.min.js"></script>
+ <script src="js/so/createso.js"></script>
+<script src="plugins/toggle-master/bootstrap-toggle.js"></script>
+
+<!-- page script -->
+    <script>
+      $(function () {
+	  //Initialize Select2 Elements
+		$('.select2').select2();
+        $("#example1").DataTable();
+        
+        $('#example2').DataTable({
+          "paging": false,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": false,
+          "autoWidth": false
+        });
+        $('#somedia1').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
+            "info": false,
+            "autoWidth": false
+          });
+  		
+        //Date picker
+    $('.datepicker').datepicker({
+      autoclose: true,
+      defaultDate: null 
+    })
+		 //Timepicker
+   /*  $('.timepicker').timepicker({
+      showInputs: false
+    }) */
+    
+    
+    
+      });
+    </script>	 
+	 <script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+    var tabSet=$("#tabSet").val();
+    
+    if(tabSet=='equipment'){
+    	 $('[href="#equipment"]').tab('show');
+    }
+});
+</script>
+</body>
+</html>

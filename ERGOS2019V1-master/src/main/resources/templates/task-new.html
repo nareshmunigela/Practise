@@ -1,0 +1,500 @@
+ <!DOCTYPE html>
+
+<html xmlns:th="https://thymeleaf.org">  
+ 
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ERGOS APP</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/x-icon" href="img/logo.png">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="css/skins/_all-skins.min.css">
+	<link href="plugins/toggle-master/bootstrap-toggle.css" rel="stylesheet">
+   <!-- DataTables -->
+    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+	<!-- Select2 -->
+  <link rel="stylesheet" href="plugins/select2/select2.min.css">
+  
+  <link rel="stylesheet" th:href="@{//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}" type="text/css"/>  
+  <style>
+  #map{
+        height: 100%;
+      }
+  #map_new{
+        height: 100%;
+      }
+          
+          .pac-container{
+          z-index: 1052;
+          }
+          
+          
+          .input_error{
+          border-color:red;
+          }
+          .input_error_select2{
+          border:1px solid red;
+          }
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+ 
+    <!-- Main Header -->
+ <div th:include="header"></div>
+  <!-- Left side column. contains the logo and sidebar -->
+
+ <div th:include="sidebar"></div>
+  <!-- Content Wrapper. Contains page content -->
+  
+ 
+
+<div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+       
+        <section class="content-header no-padding">
+<nav class="navbar no-margin">
+<div class="container-fluid">
+<ul class="nav navbar-nav">
+<li><a href="/viewMaterials"><i class="glyphicon glyphicon-search margin-r-10"></i>Search</a></li>
+<li class="active"><a href="/viewMaterials">New Material
+<span class="action-tools pull-right margin-l-20"><button type="button">×</button></span></a>
+</li>
+<li><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+<span class="action-tools margin-r-5"><button type="button">+</button></span>New</a>
+<ul class="dropdown-menu">
+
+<li role="presentation"><a role="menuitem" tabindex="-1" href="/newMaterial">+ New Material</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="/viewMaterials">+ View Material</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ New Task</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ View Task</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ New Price Guide</a></li>
+ 
+</ul>
+</li>
+
+</ul>
+</div>
+</nav>
+</section>
+
+<section class="margin-t-10">
+			<ul class="create-nav-list list-inline text-center no-margin">
+    <li class="active"><a href="#"><i class="fa  fa-check fa-icon-circle margin-r-10"></i>Task Details</a></li>
+    <li><a href="#">---------<i class="fa  fa-check fa-icon-circle margin-x-10"></i> Material Details</a></li>
+    <li><a href="#">---------<i class="fa  fa-check fa-icon-circle margin-x-10"></i>Pricing Details</a></li>
+    <li><a href="#">---------<i class="fa  fa-check fa-icon-circle margin-x-10"></i>Finalize</a></li>
+    </ul>
+		</section>
+        <!-- Main content -->
+        <section class="content">
+          <div class="row prev_next_area" id="1">
+		  <div class="col-md-12">
+			
+		  </div>
+            <div class="col-md-12"> 
+              <div class="box box-info no-border no-shadow">
+             
+			
+			<!-- form start -->
+           
+              <div class="box-body">
+               <form role="form" class="request-form" action="/saveMaterial" id="material_form_id">
+               
+               <section data-step="1">
+								<div class="row no-margin">
+								<h4 class="title-band1"> <span class="title padding-5" >New Task</span> </h4>
+								<div class="col-md-6">
+                <div class="form-group  col-md-6 no-padding">
+                 <label>Task type: </label> 
+                <input type="radio" name="taskType" value="Standard"/>Standard 
+           <input type="radio" name="taskType" value="Membership"/> Membership 
+ 
+                </div>
+                 <div class="form-group  col-md-6 no-padding">
+                 <label><input type="checkbox" id="" name=""> Tax exempt</label>
+		
+                       </div>
+                <div class="form-group  col-md-6 padding-none-r-10">
+                 <label>Task Code</label> 
+                  <input type="text" class="form-control" placeholder="Enter Task Code" name="" id="" required="required">
+                </div>
+                
+                <div class="form-group  col-md-6 no-padding">
+                 <label>Name</label> 
+                  <input type="text" class="form-control" placeholder="Enter Name" name=" " id="" required="required">
+                </div>
+                
+                
+                
+                
+                <div class="form-group">
+<label >Description</label>
+<textarea class="form-control" rows="2" placeholder="Enter ..." name="description" id="descriptionID"></textarea>
+ 
+
+</div>
+          
+          
+          
+            <div class="row">
+                <div class="form-group select col-md-6">
+                   <label>Task Category</label>
+                  <select class="form-control select2 select2-hidden-accessible" name="" style="width: 100%;" required="required">
+                  	<option>Category1</option>
+                  	<option>Category2</option>
+                  	<option>Category3</option>
+                  </select>
+                </div>
+                
+                <div class="form-group select col-md-6">
+                   <label>Check List</label>
+                  <select class="form-control select2 select2-hidden-accessible" name="" style="width: 100%;" required="required">
+                  	<option>Check List1</option>
+                  	<option>Check List2</option>
+                  	<option>Check List3</option>
+                  </select>
+                </div>
+                </div>
+          
+               <div class="row">
+                <div class="form-group select col-md-6">
+                   <label>Page name</label>
+                  <select class="form-control select2 select2-hidden-accessible" name="" style="width: 100%;" required="required">
+                  	<option>Page name1</option>
+                  	<option>Page name2</option>
+                  	<option>Page name3</option>
+                  </select>
+                </div>
+                
+                <div class="form-group select col-md-6">
+                   <label>Page Heading</label>
+                  <select class="form-control select2 select2-hidden-accessible" name="" style="width: 100%;" required="required">
+                  	<option>Page Heading1</option>
+                  	<option>Page Heading2</option>
+                  	<option>Page Heading3</option>
+                  </select>
+                </div>
+                </div>  
+              
+          
+              </div>
+               
+			  <div class="col-md-6">
+			  
+			 <div class="form-group">
+                   <div style="padding: 10px;border:2px dotted #ccc;border-radius: 10px;" id="material_File_uploadimgs">
+                  <p class="help-block">Upload Corresponding Images,if any</p>
+                  
+                  </div>
+                  
+				  <input type="file" name="" id="task_File" style="display: none;">
+                 </div>
+                 <ul class="list-unstyled" id="task_Files" style="display: none;">
+				
+				</ul>
+			  
+			 <!--  <div class="form-group col-md-3 padding-none-r-10">
+                  <label>Category</label>
+                  <select class="form-control select2 select2-hidden-accessible" name="" style="width: 100%;" required="required">
+                  	<option>Category1</option>
+                  	<option>Category2</option>
+                  	<option>Category3</option>
+                  </select>
+                </div>
+                
+                
+                <div class="form-group col-md-9 no-padding">
+                  <label>Tags</label>
+                  <input type="text" class="form-control" placeholder="Enter Tags seperated by commmas" name="" id="">
+                </div> -->
+			 
+              </div>
+               
+			  </div>
+			  
+			  </section>
+			  </form>
+			  
+			  
+			   
+				</div>
+				 
+						
+						
+            <!-- /.box-body -->
+              
+            <!-- /.box-footer -->
+			 
+          </div>
+		  </div><!-- /.col -->
+		  </div><!-- /.row -->
+		  
+		  
+		  <div class="row prev_next_area no-margin" id="2">
+		  
+		  <div class="box box-info no-border no-shadow">
+		  
+			
+			<form role="form" class="request-form" id="updatetask_form_id">
+			
+			<section data-step="3">
+              <div class="box-body">
+		
+				 
+ 
+				
+				 </div>
+				 <!-- /.box-body -->
+				
+				</section>
+						</form>
+			
+			</div>
+			
+		  </div>
+		  
+		  
+		  
+		  
+		  
+		   <div class="row prev_next_area no-margin" id="3">
+		   <div class="box box-info no-border no-shadow">
+		   	
+		 	
+		 	<form  class="request-form form-horizontal" action="#" th:object="${material}" >
+              <div class="box-body">
+              
+        
+			</div><!-- /.box-body -->
+						</form>
+						
+						</div>
+						
+						
+		   </div>
+		  
+		  
+		  <div class="box-footer text-right">
+			<div class="pull-left">
+			<button type="submit" class="btn btn-default margin-r-10 btn-flat no-border material_prev_btn " ><i class="fa fa-fw fa-backward margin-r-5"></i>Back</button>
+				
+			</div>
+			<div class="pull-right text-right">
+			  <!-- <button type="submit" class="btn btn-warning margin-r-10">Reset</button> -->
+			  	<button type="submit" class="btn btn-label margin-r-10" data-toggle="modal" data-target="#cancelMaterial">Cancel</button>
+                <button type="submit" class="btn btn-primary btn-flat margin-r-10 material_next_btn">Next<i class="fa fa-fw fa-forward margin-l-5"></i></button>
+			</div>	
+              </div>
+		  
+		  <input type="hidden" id="selected_area" value="1"/>
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+</div>
+
+
+<!-- cancelMaterial Modal start -->
+<div id="cancelMaterial" class="modal fade modal-alert" role="dialog">
+				 <div class="modal-dialog modal-dialog-sm">
+				<!-- Modal content-->
+				<div class="modal-content">
+				<div class="modal-header">
+				</div> 
+				<div class="modal-body">
+				<div class="row no-margin text-center">
+					<p class="no-margin"><i class="fa fa-close fa-icon-circle text-red  fa-lg margin-t-20"></i></p>
+					<p class="text-danger">Are you sure?</p>
+				 	<p>Do you really want to Cancel?</p>
+				 	
+              	</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-label btn-flat"  data-dismiss="modal">Stay on the page</button>
+				<a href="/viewMaterials"><button type="button" class="btn btn-danger btn-flat"  >Leave</button></a>
+				</div>
+				</div>
+				</div>
+				</div><!-- /.model -->
+		  </div>
+<!-- cancelMaterial Modal end -->
+ 
+<!-- Error Modal start -->
+<div id="errorModal" class="modal fade modal-alert" role="dialog">
+				 <div class="modal-dialog modal-dialog-sm">
+				<!-- Modal content-->
+				<div class="modal-content">
+				<div class="modal-header">
+				</div> 
+				<div class="modal-body">
+				<div class="row no-margin">
+				<div class="col-md-offset-2 col-md-8">
+              <div  class="row" >
+              	<div class="form-group pad" id="err_msg">
+              	</div>
+              </div>
+				</div>
+              </div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-primary btn-flat"  data-dismiss="modal">Ok</button>
+				</div>
+				</div>
+				</div>
+				</div><!-- /.model -->
+		  </div>
+<!-- Error Modal end -->
+	      
+<input type="hidden" name="timestamp" id="timestamp_id" th:value="${TIMESTAMP}"/>
+
+
+ <form action="/viewMaterial" id="Material_form_id">
+
+<!-- <input type="submit" id="viewMaterial_btn" style="display: none;"/> -->
+</form> 
+
+<input type="hidden" id="tabstatus" th:value="${tabstatus}"/>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 2.2.3 -->
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/so/task.js"></script>
+<!-- Select2 -->
+<script src="plugins/select2/select2.full.min.js"></script>
+<!-- DataTables -->
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    
+    
+ 	<!-- bootstrap datepicker -->
+<!-- <script src="plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script> -->
+<!-- bootstrap time picker -->
+<!-- <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script> -->
+<!--   <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script> -->
+
+	<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- AdminLTE App -->
+<script src="js/app.min.js"></script>
+ 
+<script src="plugins/toggle-master/bootstrap-toggle.js"></script>
+
+  
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. Slimscroll is required when using the
+     fixed layout. -->
+<!-- page script -->
+
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script>
+      $(function () {
+    	  
+    	 // $('*').tooltip('disable');
+    	
+	  //Initialize Select2 Elements
+		$('.select2').select2();
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+          "paging": false,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": false,
+          "info": false,
+          "autoWidth": false
+        });
+        
+        
+        $(".toogle_nav_li").removeClass("active");
+        $("#inventory_li").addClass("active");
+       /*  $('#datepicker').datepicker({
+            autoclose: true,
+          });
+         */
+
+         var dateToday = new Date();
+   	  var dates = $("#datepicker").datepicker({
+   	      changeMonth: true,
+   	      minDate: dateToday,
+   	      
+   	      onSelect: function(selectedDate) {
+   	          var option = this.id == "from" ? "minDate" : "maxDate",
+   	              instance = $(this).data("datepicker"),
+   	              date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+   	          dates.not(this).datepicker("option", option, date);
+   	      }
+   	  });
+   	  $('#datepicker').datepicker( 'setDate', dateToday );
+         //Data Mask
+        
+        
+        
+       
+        
+      		 //Timepicker
+          /* $('.timepicker').timepicker({
+            showInputs: false
+          }); */
+      		 
+          
+          var tabstatus=$("#tabstatus").val();
+          
+          if(tabstatus=="VIEW"){
+        	  $(".prev_next_area").hide();
+				$("#3").show();
+          }
+       
+      });
+    </script>	 
+	 <script>
+$(document).ready(function(){
+	/* var timestamp=new Date().getTime();
+	alert(timestamp);
+	$("#timestamp_id").val(timestamp); */
+    $('[data-toggle="tooltip"]').tooltip();
+    
+    //Data Mask
+    //$('[data-mask]').inputmask()
+    //Tax_Exempt Reason_block
+   
+   /*   for (i = new Date().getFullYear(); i > 1900; i--)
+{
+    $('.yearpicker').append($('<option />').val(i).html(i));
+} */
+   
+     for (i = 1; i <= 10; i++)
+     {
+         $('.yearpicker').append($('<option />').val(i).html(i));
+     }
+     for (i = 0; i < 12; i++)
+     {
+    	  
+    	/*  if(i==new Date().getMonth()){
+    		 $('.monthpicker').append($('<option selected="selected"/>').val(i).html(i));
+    	 }else{
+    		 $('.monthpicker').append($('<option />').val(i).html(i));
+    	 } */
+    	 $('.monthpicker').append($('<option />').val(i).html(i));
+     }
+     
+});
+</script>
+</body>
+</html>
+ 

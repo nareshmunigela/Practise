@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>ERGOS APP</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link rel="icon" type="image/x-icon" href="img/logo.png">
+<!-- Bootstrap 3.3.6 -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="css/AdminLTE.min.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="css/skins/_all-skins.min.css">
+<link href="plugins/toggle-master/bootstrap-toggle.css" rel="stylesheet">
+<!-- DataTables -->
+<link rel="stylesheet"
+	href="plugins/datatables/dataTables.bootstrap.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="plugins/select2/select2.min.css">
+
+<link rel="stylesheet"
+	th:href="@{//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}"
+	type="text/css" />
+<style>
+#map {
+	height: 100%;
+}
+
+#map_new {
+	height: 100%;
+}
+
+.pac-container {
+	z-index: 1052;
+}
+
+.input_error {
+	border-color: red;
+}
+</style>
+</head>
+
+<body class="hold-transition sidebar-mini">
+	<div class="wrapper">
+
+		<!-- Main Header -->
+		<div th:include="header"></div>
+		<!-- Left side column. contains the logo and sidebar -->
+
+		<div th:include="sidebar"></div>
+		<!-- Content Wrapper. Contains page content -->
+
+
+
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+
+			<section class="content-header no-padding">
+				<nav class="navbar no-margin">
+					<div class="container-fluid">
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="/viewMaterials"><i
+									class="glyphicon glyphicon-search margin-r-10"></i>Search</a></li>
+							 
+					 
+
+							<li><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" aria-expanded="false"> <span
+									class="action-tools margin-r-5"><button type="button">+</button></span>New
+							</a>
+								<ul class="dropdown-menu">
+
+									<li role="presentation"><a role="menuitem" tabindex="-1"
+										href="/newMaterial">+ New Material</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1"
+										href="/viewMaterials">+ View Material</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1"
+										href="#">+ New Task</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1"
+										href="#">+ View Task</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1"
+										href="#">+ New Price Guide</a></li>
+
+								</ul>
+							</li>
+
+						</ul>
+					</div>
+				</nav>
+			</section>
+
+<section class="margin-y-20">
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+	 <form action="/serchByMaterialKey" method="post">
+<div class="main-search input-group margin">
+				<div class="input-group-addon no-padding">
+                <span class="seperator" aria-expanded="false">
+				<i class="fa fa-ellipsis-v fa-lg text-blue"></i>
+				</span>
+                </div>
+                 
+                <input type="text" name="materialSearchKey" class="form-control"  placeholder="Search Material">
+				 
+
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-primary btn-lg btn-flat">
+					  <span class="glyphicon glyphicon-search margin-r-5"></span>Search</button>
+                    </span>
+              </div>
+              
+              </form>
+              
+
+</div>
+</div>
+</section>
+ <!-- Main content -->
+        <section class="content">
+          <div class="row">
+		  <div class="col-md-12">
+			   <div class="box box-info no-border no-shadow bg-transparent">
+            
+            <!-- /.box-header -->
+			
+            <div class="box-body table-responsive">
+              <table id="solist" class="table table-responsive table-outline-bordered table-condensed bg-white">
+                    <thead>
+                      <tr class="bg-gray-light">
+				  <th >Name</th>
+				  <th class="col-md-3">MaterialCode</th>
+				   <th>Manufacturer</th>
+				    <th>Modal No</th>
+				  <th>UnitCharge</th>
+				  <th class="text-right">Actions</th>
+				  </tr>
+                    </thead>
+                <tbody >
+                
+                 <tr th:each="material :${materialsList}">
+				<td th:text="${material.name}"> </td>
+				<td th:text="${material.materialCode}"></td>  
+				  <td th:text="${material.manufacturer}"></td>  
+				  <td th:text="${material.modelNumber}"></td>  
+				  <td th:text="${material.unitCharge}"></td>  
+				  
+				  <td class="col-md-2 text-right"><a th:href="${'/viewMaterial?materialId='+material.materialId}" class="btn btn-primary btn-flat margin-t-10  margin-r-5" data-toggle="tooltip" data-original-title="View material">
+				  View </a>
+				  </td>
+                </tr> 
+                
+                
+				</tbody></table>
+            </div>
+            <!-- /.box-body -->
+              
+            <!-- /.box-footer -->
+          </div>    
+		  </div><!-- /.col -->
+		  </div><!-- /.row -->
+        </section><!-- /.content -->
+
+		</div><!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+     <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+
+
+<script src="js/app.min.js"></script>
+<script src="../plugins/toggle-master/bootstrap-toggle.js"></script>
+	 <script>
+$(document).ready(function(){
+	  
+	$(".toogle_nav_li").removeClass("active");
+    $("#inventory_li").addClass("active");
+    
+     $("#solist").dataTable({
+    	 "order":[0,"desc"],
+    	 "lengthChange": false,
+    	 "dom": '<"top"i,f>rt<"bottom"p>',
+    	 "searching": false,
+     
+});
+     
+     $("#solist_info").css("display","inline");
+     $("#solist_filter").css("display","inline");
+     $("#solist_filter").css("float","right");
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+</body>
+</html>

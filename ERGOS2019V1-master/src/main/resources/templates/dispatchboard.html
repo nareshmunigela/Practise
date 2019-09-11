@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://thymeleaf.org">  
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ERGOS APP</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/x-icon" href="img/logo.png">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="css/skins/_all-skins.min.css">
+	<link href="plugins/toggle-master/bootstrap-toggle.css" rel="stylesheet">
+   <!-- DataTables -->
+    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+	<!-- Select2 -->
+  <link rel="stylesheet" href="plugins/select2/select2.min.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="plugins/fullcalendar/dist/fullcalendar.min.css">
+  <link rel="stylesheet" href="plugins/fullcalendar/dist/fullcalendar.print.min.css" media="print">
+  
+  
+  <style type="text/css">
+  
+  .fc-time {
+    display:none;
+}
+  </style>
+ </head>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+     <!-- Main Header -->
+ <div th:include="header"></div>
+  <!-- Left side column. contains the logo and sidebar -->
+
+ <div th:include="sidebar"></div>
+  <!-- Content Wrapper. Contains page content -->
+
+<div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+       <section class="content-header no-padding">
+	   <nav class="navbar no-margin">
+		<div class="container-fluid">
+		<ul class="nav navbar-nav">
+		<li><a href="#"><i class="glyphicon glyphicon-search margin-r-10"></i>Search</a></li>
+		<li class="active"><a href="#">Dispatch Board
+			<span class="action-tools pull-right margin-l-20"><button type="button">×</button></span></a>
+		</li>
+		<li><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			<span class="action-tools margin-r-5"><button type="button">+</button></span>New</a>
+			<ul class="dropdown-menu">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ New Service Order</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ Close Service Order</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ Dispatch Board</a></li>
+             </ul>
+		</li>
+      
+		</ul>
+		</div>
+		</nav>
+	   </section>
+	   
+      
+	  </div><!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 2.2.3 -->
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<!-- Select2 -->
+<script src="plugins/select2/select2.full.min.js"></script>
+<!-- DataTables -->
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    
+    
+ 	<!-- bootstrap datepicker -->
+<!-- <script src="plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script> -->
+<!-- bootstrap time picker -->
+<!-- <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script> -->
+<!--   <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script> -->
+
+	<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- AdminLTE App -->
+<script src="js/app.min.js"></script>
+<script src="js/so/createso.js"></script>
+<script src="plugins/toggle-master/bootstrap-toggle.js"></script>
+<!-- fullCalendar -->
+<script src="plugins/moment/moment.js"></script>
+<!-- page script -->
+    <script>
+      $(function () {
+
+	  //Initialize Select2 Elements
+		$('.select2').select2();
+        $("#example1").DataTable();
+        $("#example2").DataTable({
+          "paging": false,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": false,
+          "info": false,
+          "autoWidth": false
+        });
+		//Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+	
+    //Data Mask
+    $('[data-mask]').inputmask()
+		 //Timepicker
+    
+	 
+      });
+    </script>	 
+	 
+ 
+</body>
+</html>

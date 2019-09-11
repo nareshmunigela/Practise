@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://thymeleaf.org">  
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ERGOS APP</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/x-icon" href="img/logo.png">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="css/skins/_all-skins.min.css">
+	<link href="../plugins/toggle-master/bootstrap-toggle.css" rel="stylesheet">
+   <!-- DataTables -->
+    <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
+    
+    
+    
+</head>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+     <!-- Main Header -->
+ <div th:include="header"></div>
+  <!-- Left side column. contains the logo and sidebar -->
+
+ <div th:include="sidebar"></div>
+  <!-- Content Wrapper. Contains page content -->
+  
+ 
+
+  <!-- Content Wrapper. Contains page content -->
+
+<div class="content-wrapper">
+
+
+<section class="content-header no-padding">
+<nav class="navbar no-margin">
+<div class="container-fluid">
+ 
+ 
+ <ul class="nav navbar-nav">
+<li class="active"><a href="/sitesList"><i class="glyphicon glyphicon-search margin-r-10"></i>Search</a></li>
+
+<li><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+<span class="action-tools margin-r-5"><button type="button">+</button></span>New</a>
+<ul class="dropdown-menu">
+<li role="presentation"><a role="menuitem" tabindex="-1" href="/newserviceorder">+ New Service Order</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ Close Service Order</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="/dispatchboard">+ Dispatch Board</a></li>
+</ul>
+</li>
+
+</ul>
+ 
+ 
+</div>
+</nav>
+</section>
+
+<section class="margin-y-20">
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+	 <form action="/serchBysiteKey">
+<div class="main-search input-group margin">
+				<div class="input-group-addon no-padding">
+                <span class="seperator" aria-expanded="false">
+				<i class="fa fa-ellipsis-v fa-lg text-blue"></i>
+				</span>
+				  <ul class="dropdown-menu no-margin flat">
+                    <li class="active"><a href="#">Site</a></li>
+                    <li><a href="#">Customer</a></li>
+                    </ul>
+                </div>
+				
+                 
+                <input type="text" name="paramName" class="form-control"  placeholder="Search Site, Company, etc...">
+				<input type="hidden" name="siteorcustomur" value="SITE" id="siteorcustomor_id"/>
+
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-primary btn-lg btn-flat">
+					  <span class="glyphicon glyphicon-search margin-r-5"></span>Search</button>
+                    </span>
+              </div>
+              
+              </form>
+              
+
+</div>
+</div>
+</section>
+        <!-- Content Header (Page header) -->
+       
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+		  <div class="col-md-12">
+			   <div class="box box-info no-border no-shadow bg-transparent">
+            
+            <!-- /.box-header -->
+			
+            <div class="box-body table-responsive">
+              <table id="solist" class="table table-responsive table-outline-bordered table-condensed bg-white">
+                    <thead>
+                      <tr class="bg-gray-light">
+                       
+				  <th >Site ID</th>
+				  <th class="col-md-2">Service Address</th>
+				   <th  class="col-md-4">Phone & E-Mail</th>
+				    <th  class="col-md-2">Bill to Customer</th>
+				  <th>Service Order No <br/>and Date </th>
+				  <!-- <th>ServiceOrder ID</th> -->
+                  
+                  <!-- <th>Date</th> -->
+				  <th class="text-right">Actions</th>
+				  </tr>
+                    </thead>
+                <tbody >
+                
+                <tr th:each="siteDTO :${sitesListDTO}">
+
+				  
+				<td th:text="${siteDTO.siteNumber}"> </td>
+				<td  class="col-md-2" th:text="${siteDTO.siteAddress}"></td><!-- siteAddress siteUnit -->
+				
+				 <td class="word-break col-md-4">
+				 <span th:text="${siteDTO.primaryContactName}" class="text-blue"></span><br/>
+				 <i class="fa fa-fw fa-phone fa-lg text-blue margin-r-5"></i><span th:text="${siteDTO.primaryPhone}"></span>
+				  <br/>
+				  <i class="fa fa-fw fa-envelope-o fa-lg text-blue margin-r-5"></i><span th:text="${siteDTO.primaryEmail}"></span>
+				  
+				  </td>
+				  <td  class="col-md-2" ><span class="text-blue" th:text="${siteDTO.customerName}"></span><br/>
+				  <span class="text-blue" th:text="${siteDTO.customerNumber}"></span><br/>
+				  
+				  <span th:text="${siteDTO.address}"></span></td>
+				  
+				
+				
+				 <td><span th:text="${siteDTO.serviceOrderNumber}"></span><br/><span th:text="${siteDTO.updatedDate}"></span></td>
+				 
+				  
+				  
+				   
+				  
+				 
+				   <!-- <td><span th:text="${siteDTO.updatedDate}"></span></td> -->
+				  
+				  
+				  <td class="col-md-2 text-right"><a th:href="${'/sodrderview?soId='+siteDTO.serviceOrderId+'&tabSet=so'}" class="btn btn-primary btn-flat margin-t-10  margin-r-5" data-toggle="tooltip" data-original-title="View Service Order">
+				  View </a>
+				  <a th:href="${'/newsoForExistingSite?soId='+siteDTO.serviceOrderId}" class="btn btn-primary btn-flat  margin-t-10" data-toggle="tooltip" data-original-title="New Service Order">
+				  New </a></td>
+				  
+				  
+				  
+                </tr>
+                
+                
+				</tbody></table>
+            </div>
+            <!-- /.box-body -->
+              
+            <!-- /.box-footer -->
+          </div>    
+		  </div><!-- /.col -->
+		  </div><!-- /.row -->
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+     <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+
+
+<script src="js/app.min.js"></script>
+<script src="../plugins/toggle-master/bootstrap-toggle.js"></script>
+	 <script>
+$(document).ready(function(){
+	  
+     
+     $("#solist").dataTable({
+    	 "order":[0,"desc"],
+    	 "lengthChange": false,
+    	 "dom": '<"top"i,f>rt<"bottom"p>',
+    	 "searching": false,
+     
+});
+     
+     $("#solist_info").css("display","inline");
+     $("#solist_filter").css("display","inline");
+     $("#solist_filter").css("float","right");
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+</body>
+</html>

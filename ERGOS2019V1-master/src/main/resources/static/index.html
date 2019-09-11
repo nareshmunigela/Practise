@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ERGOS APP</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/x-icon" href="img/logo.png">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="css/AdminLTE.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
+	<style>
+	.login-logo img{
+	margin-bottom:0px;
+	width:75px;
+	height:75px;
+	border-radius:50px;
+	margin-top:20px;
+	}
+	.login-logo, .register-logo {
+    font-size: 33px;
+   }
+   
+   .msg{
+    text-align: center;
+    color: white;
+    position: fixed;
+    top: 50px;
+    left: 20%;
+    right: 20%;
+   }
+	</style>
+	
+	</head>
+  <body class="hold-transition login-page no-background">
+  <div class="row">
+  <div class="col-md-6 pull-left">
+  <div class="login-info-box">
+              <div class=""><h1>A True All-In-One Solution</h1></div>
+              <div class=""><p>Ergos Software is the leading provider in Enterprise Service Software for the Field Service Industry</p></div>
+              <div class=""><h3>Already signed Up? Use your existing username across multiple Projects.</h3></div>
+              <div class="text-center"><p>OR</p></div>
+              <div class="login-footer text-center"><button type="submit" class="btn btn-lg bg-black text-white margin-r-10">Create a brand new profile</button></div>
+          </div>
+  </div>
+  <div class="col-md-6 pull-right login-wrap">
+  
+   <div class="login-box">
+	<div class="login-logo">
+        <a href="#" class="text-black"><img class="img-responsive" src="img/logo.png" alt="logo"></br><b>ERGOS</b>SOFT123</a>
+      </div><!-- /.login-logo -->
+       <div class="msg"><span th:text="${msg}" ></span></div>
+      <div class="login-box-body">
+                <form action="ergossoft/login">
+		<div class="form-wrap">
+          <div class="form-group has-feedback">
+            <input type="text" name="userName" class="form-control" placeholder="Username">
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+		  </div>
+          <div class="row no-margin">
+            <div class="col-xs-8">
+              <div class="form-group">
+                <label>
+                   Not registered yet? <a href="/signup" >Sign Up</a>
+                </label>
+				<label>
+                   Forgot Password
+                </label>
+              </div>
+            </div><!-- /.col -->
+            <div class="col-xs-4">
+              <button type="submit" class="btn bg-blue-gradient btn-block">Sign In</button>
+              <!--  <a href="/signup" class="btn bg-blue-gradient btn-block">Sign In</a> -->
+            </div><!-- /.col -->
+          </div>
+        </form>
+
+        
+		</div><!-- /.login-box-body -->
+	  
+    </div><!-- /.login-box -->
+</div>
+</div>
+    <!-- jQuery 2.1.4 -->
+    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="plugins/iCheck/icheck.min.js"></script>
+    <script>
+      $(function () {
+        $('input').iCheck({
+          checkboxClass: 'icheckbox_square-blue',
+          radioClass: 'iradio_square-blue',
+          increaseArea: '20%' // optional
+        });
+      });
+    </script>
+  </body>
+</html>
