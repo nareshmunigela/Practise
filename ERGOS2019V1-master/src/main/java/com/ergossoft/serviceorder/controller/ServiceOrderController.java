@@ -262,13 +262,14 @@ public class ServiceOrderController {
 	
 	@RequestMapping("/sodrderview")
 	public ModelAndView viewServiceOrder(@RequestParam Integer soId ,@RequestParam String tabSet) {
-		int companyId=5;
+		int companyId=1;
 		ModelAndView model=new ModelAndView(); 
 		try {
+			//naresh serviceOrderId =soId
 		ServiceOrder soorder=soRepositry.findById(soId).get();
 		try {
 			ServiceOrderStatus sostatus1=soSatusRep.findById(soorder.getServiceOrderStatusId()).get();
-			soorder.setSoldBy(sostatus1.getDescription());
+			soorder.setSoldBy(sostatus1.getDescription());//naresh what is sold by
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -284,7 +285,7 @@ public class ServiceOrderController {
 		 
 		 Contact contactObj=contactRepository.findById(primaryContactId).get();
 		 String relationshipTYpe=null;
-		 if(contactObj.getRelationshipTypeId()>0) {
+		 if(contactObj.getRelationshipTypeId()>0) {//naresh what is relationship id?
 				try {
 					RelationshipType r=relationshipTypeRepository.findById(contactObj.getRelationshipTypeId()).get();
 					relationshipTYpe=r.getDescription();
@@ -317,7 +318,7 @@ public class ServiceOrderController {
 			e.printStackTrace();
 		}
 		
-		Site site=siteRep.findById(soorder.getSiteId()).get();
+		Site site=siteRep.findById(soorder.getSiteId()).get(); //naresh serviceorder already has siteid. why to retrieve again?
 		
 		List<ServiceOrder> orders=soRepositry.findServiceOrderBySite(site.getSiteId(),companyId);
 		ScheduleTime times=timeslot.findById(soorder.getScheduledTimeId()).get();

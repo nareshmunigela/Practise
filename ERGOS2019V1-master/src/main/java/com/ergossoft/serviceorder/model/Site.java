@@ -36,7 +36,6 @@ public class Site {
 	
 	@Column(name = "SiteUnit")
 	private String siteUnit;
-
 	
 	/*
 	 * @Column(name = "PreciseAddress") private String preciseAddress;
@@ -45,17 +44,12 @@ public class Site {
 	   private String zipCode;
 		  @Column(name = "State_ID") 
 		  private String state;
-		 
-
 		@Column(name = "City")
 		private String city;
-		
 		
 	/*
 	 * @Column(name = "Country") private String country;
 	 */
-		 
-		
 
 		@Column(name = "Sector")
 		private String sector;
@@ -68,13 +62,6 @@ public class Site {
 	 * 
 	 * @Column(name = "State_ID") private Integer stateCodeId;
 	 */
-	
-	
-	
-	
-
-	
-
 
 	@Column(name = "TaxJurisdictionCode_ID")
 	private Integer taxJurisdictionCodeId;

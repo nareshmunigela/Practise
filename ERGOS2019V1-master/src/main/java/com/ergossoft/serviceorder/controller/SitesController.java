@@ -62,19 +62,13 @@ public class SitesController {
 	@RequestMapping("/sitesList")
 	public @ResponseBody ModelAndView getSitesList() {
 		int companyId=1;
-		 
-	 
 		ModelAndView modelAndView=new ModelAndView();
-		
 		List<SitesListDTO> sitesListDTO=new  ArrayList<SitesListDTO>();
 		List<Site> sitesList=siteRepository.findAll();
-	 
 		sitesListDTO=addSitesListDTO(sitesList,companyId);
-		
 		modelAndView.addObject("sitesListDTO",sitesListDTO);
 		modelAndView.setViewName("service-requests");
 		return modelAndView;
-		//return "service-requests";
 	}
  
 	@RequestMapping("/siteLatestSO")
@@ -347,18 +341,20 @@ public class SitesController {
 		
 		
 		List<SitesListDTO>	sitesListDTO=new ArrayList<SitesListDTO>();
+		SitesListDTO dto = null;
 
-		Iterator sitesItr=sitesList.iterator();
+		Iterator<Site> sitesItr=sitesList.iterator();
 		while (sitesItr.hasNext()) {
 			
 			try {
 			 
 			Site siteObj = (Site) sitesItr.next();
 			//get last service order for the site
-			
-			SitesListDTO dto=new SitesListDTO();
+			System.out.println(" siteObj.getSiteId() "+siteObj.getSiteId());
+			dto=new SitesListDTO();
 			dto.setSiteId(siteObj.getSiteId());
-			//dto.setSiteAddress(siteObj.getSiteAddress());
+			//System.out.println(" siteObj.getSiteAddress() "+siteObj.getSiteAddress());
+			dto.setSiteAddress(siteObj.getSiteAddress());
 			try {
 			//naresh dto.setSitePreciseAddress(siteObj.getPreciseAddress());
 			 
@@ -390,15 +386,15 @@ public class SitesController {
 				e.printStackTrace();
 			}
 			
-			 
-			dto.setSiteNumber(siteObj.getSiteNumber());
+			 System.out.println("site number "+siteObj.getSiteNumber());
+			dto.setSiteNumber(siteObj.getSiteId().toString());
 			List<ServiceOrder> serviceOrderForSiteList = new ArrayList<ServiceOrder>();
 			ServiceOrder latestserviceOrderForSite=null;
 			try { 
 				serviceOrderForSiteList =  serviceOrderRepository.findServiceOrderBySite(siteObj.getSiteId(),companyId);
 				if(serviceOrderForSiteList!=null && !serviceOrderForSiteList.isEmpty()) {
 					
-					
+					System.out.println(" siteObj.getSiteId() "+siteObj.getSiteId());
 					latestserviceOrderForSite =	serviceOrderForSiteList.get(0);
 				
 					 //for(ServiceOrder latestserviceOrderForSite : serviceOrderForSiteList){
@@ -409,10 +405,14 @@ public class SitesController {
 							
 							 Customer customer=  new Customer();// naresh customerRepository.findById(latestserviceOrderForSite.getCustomerId()).get();
 							 customer.setZipCode("123");
-							 customer.setAddress("abc");
+							 customer.setAddress("3-5-76 indiranagar ramanthapur Hyderabad");
 							 customer.setCity("city");
 							 customer.setPreciseAddress("PAddress");
 							 customer.setState("State");
+							 customer.setCustomerNumber("1234567890");
+							 customer.setAddressUnit("setAddressUnit");
+							 customer.setName("Ramakrishna");
+							 
 							 dto.setAddress(customer.getAddress());
 							 try {
 									dto.setPreciseAddress(customer.getPreciseAddress());
@@ -444,35 +444,23 @@ public class SitesController {
 										e.printStackTrace();
 									}
 							 
-							 
-							 customer.setCustomerNumber("customerNumber");
-							 customer.setAddressUnit("setAddressUnit");
-							 customer.setName("setName");
 							 dto.setAddressUnit( customer.getAddressUnit());
 							 dto.setCustomerName(customer.getName());
+							 dto.setCustomerNumber(customer.getCustomerNumber());
+							 
+							 
 							//naresh  int primaryContactId=serviceOrderContactRepository.findSitePrimaryContactId(latestserviceOrderForSite.getServiceOrderId(), "SITE");
 							 
 							 int primaryContactId =34;
-							 
-							 dto.setCustomerNumber(customer.getCustomerNumber());
-							 
 							 Contact contactObj=contactRepository.findById(primaryContactId).get();
-							 
-							 
 							 dto.setPrimaryContactName(contactObj.getFirstName()+" "+contactObj.getLastName());
-							 
 							 String primaryPhoneNumber=getPrimaryPhoneOREmail("PHONE",contactObj);
-							 
 							 String primaryEmail=getPrimaryPhoneOREmail("EMAIL",contactObj);
-							
-							
 							 dto.setPrimaryPhone(primaryPhoneNumber);
 							 dto.setPrimaryEmail(primaryEmail);
 							dto.setLastModifiedDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(siteObj.getLastModifiedDate()));
-							System.out.println();
 							
-							
-							 sitesListDTO.add(dto);
+							// sitesListDTO.add(dto);
 							 }
 						  
 					  }
@@ -489,6 +477,8 @@ public class SitesController {
 			//e.printStackTrace();
 			System.out.println(e);
 		}
+			
+			 sitesListDTO.add(dto);
 		}
 			
 		
