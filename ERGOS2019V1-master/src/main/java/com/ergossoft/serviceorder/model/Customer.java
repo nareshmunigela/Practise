@@ -33,13 +33,10 @@ public class Customer {
 
 	@Column(name = "AddressUnit")
 	private String addressUnit;
-
-	@Column(name = "Client_ID")
-	private int clientId;
-
-	@Column(name = "Company_ID")
-	private int companyId;
-
+	
+	@Column(name = "Note")
+	private String note;
+	
 	@Column(name = "LastCall")
 	private LocalDateTime lastCall;
 
@@ -49,33 +46,9 @@ public class Customer {
 	@Column(name = "Rating")
 	private Float rating;
 
-	@Column(name = "Note")
-	private String note;
-
 	@Column(name = "Comment")
 	private String comments;
-
 	
-	@Column(name = "PreciseAddress")
-	private String preciseAddress;
-	
-	@Column(name = "ZipCode")
-	private String zipCode;
-
-	@Column(name = "State")
-	private String state;
-
-	@Column(name = "City")
-	private String city;
-	
-	
-	@Column(name = "Country")
-	private String country;
-	
-	
-/*	@Column(name = "Sector")
-	private String sector;*/
-
 	@Column(name = "UnappliedCash")
 	private Float unAppliedCash;
 
@@ -84,28 +57,52 @@ public class Customer {
 
 	@Column(name = "CustomerSince")
 	private LocalDateTime customerSince;
+
 	
-	@Column(name = "EventLog")
-	private String eventLog;
-	
-   	@Column(name = "LastModifiedDate")
-	private LocalDateTime lastModifiedDate;
+	/*
+	 * @Column(name = "PreciseAddress") private String preciseAddress;
+	 * 
+	 * @Column(name = "ZipCode") private String zipCode;
+	 * 
+	 * @Column(name = "State") private String state;
+	 * 
+	 * @Column(name = "City") private String city;
+	 */
+	@Column(name = "Client_ID")
+	private int clientId;
 
- 
-	@Column(name = "LastModifiedBy")
-	private String lastModifiedBy;
-
-
+	@Column(name = "Company_ID")
+	private int companyId;
 	@Column(name = "Status")
 	private int status;
 	
 	
-	
-	@Column(name = "TaxExempt")
-	private Boolean taxExempt;
+   	@Column(name = "UpdatedDate")
+	private LocalDateTime lastModifiedDate;
 
-	@Column(name = "Reason")
-	private String reason;
+ 
+	@Column(name = "UpdatedBy")
+	private String lastModifiedBy;
+	
+	/*
+	 * @Column(name = "Country") private String country;
+	 */
+	
+/*	@Column(name = "Sector")
+	private String sector;*/
+
+	
+	
+	/*
+	 * @Column(name = "EventLog") private String eventLog;
+	 */
+	
+	
+	/*
+	 * @Column(name = "TaxExempt") private Boolean taxExempt;
+	 * 
+	 * @Column(name = "Reason") private String reason;
+	 */
 	
 	public int getCustomerId() {
 		return customerId;
@@ -195,15 +192,6 @@ public class Customer {
 		this.blocked = blocked;
 	}
 
-	
-	
-	public String getEventLog() {
-		return eventLog;
-	}
-
-	public void setEventLog(String eventLog) {
-		this.eventLog = eventLog;
-	}
 
 	public LocalDateTime getLastModifiedDate() {
 		return lastModifiedDate;
@@ -277,61 +265,6 @@ public class Customer {
 		this.status = status;
 	}
 
-	public Boolean getTaxExempt() {
-		return taxExempt;
-	}
-
-	public void setTaxExempt(Boolean taxExempt) {
-		this.taxExempt = taxExempt;
-	}
-
-	public String getReason() {
-		return reason;
-	}
-
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
-
-	public String getPreciseAddress() {
-		return preciseAddress;
-	}
-
-	public void setPreciseAddress(String preciseAddress) {
-		this.preciseAddress = preciseAddress;
-	}
-
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
 	
 	
 

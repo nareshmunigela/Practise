@@ -147,7 +147,7 @@ $(document)
 					$("body").delegate("#savecontact_id","click",function() {
 						
 						var isValid=true;
-						 var errstr="Please fill all the required fields";
+						 var errstr="Please fill all the required fields1";
 						$("section[data-step=2] input[required='required']").each(function(idx, elem) {
 				            $(elem).removeClass("input_error");
 				            
@@ -297,7 +297,7 @@ $(document)
 
 						 
 						var isValid=true;
-						 var errstr="Please fill all the required fields";
+						 var errstr="Please fill all the required fields2";
 						$("section[data-step=2] input[required='required']").each(function(idx, elem) {
 				            $(elem).removeClass("input_error");
 				            
@@ -613,7 +613,7 @@ $(document)
 					$(".next_btn").click(
 							function(e) {
 								e.preventDefault();
-								
+								alert("next")
 								var timestamp=$("#timestamp_id").val();
 								var selected_area = Number($("#selected_area").val());
 								
@@ -643,7 +643,7 @@ $(document)
 									}
 									
 									if(isValid==false){
-										$("#err_msg").html("Please fill all the required fields");
+										$("#err_msg").html("Please fill all the required fields3");
 										$("#errorModal").modal('toggle');
 										return false;
 									}else{
@@ -867,6 +867,7 @@ $(document)
 									
 									var serviceNote=$("#serviceNote_id").val();
 									if(serviceNote!=""){
+										alert(serviceNote)
 										formData.append("notes",serviceNote);
 									}else{
 										alert("Service order note can't be empty");
@@ -926,6 +927,7 @@ $(document)
 								
 								$("ul.create-nav-list li.active>a>i.fa").last().css({"background":"none","color":"yellowgreen"});
 								//if selected_area reaches 3 then display save....
+								alert(selected_area)
 								if(selected_area==3){
 									$(".next_btn").html("SAVE")
 								}else{
@@ -1443,14 +1445,14 @@ $(document)
 
 					 $("body").delegate("#cb_Customer_save","click",function(){
 						//updateChangeBilling 
-						 
+						 alert("hai")
 						 var timestamp=$("#timestamp_id").val();
 						 var CustomerAddress=$("#pac-input_new").val();
 						 	var CustomerAddressUnit=$("#cb_CustomerAddressUnit").val();
 						 	var CustomerNumber=$("#cb_CustomerNumber").val();
 						 	var CustomerId=$("#cb_CustomerId").val();
 							var CustomerName=$("#cb_CustomerName").val();
-						 	 
+						 	 alert("hai")
 						 	if(CustomerNumber!=null&&CustomerNumber!=""){
 						 		 
 						 		 $.ajax({
@@ -2131,7 +2133,7 @@ $(document)
 									
 									
 									var isValid=true;
-									 var errstr="Please fill all the required fields";
+									 var errstr="Please fill all the required fields4";
 									$("section[data-step=4] input[required='required']").each(function(idx, elem) {
 							            $(elem).removeClass("input_error");
 							            

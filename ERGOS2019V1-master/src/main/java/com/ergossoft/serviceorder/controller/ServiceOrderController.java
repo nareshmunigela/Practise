@@ -510,6 +510,7 @@ public class ServiceOrderController {
 				
 				mediadto.setMediaFileSize(media.getMediaFileSize());
 				
+				// naresh mediadto.setMediaCategoryId(media.getMediaCategoryId());
 				mediadto.setMediaCategoryId(media.getMediaCategoryId());
 				
 				LocalDateTime ldt=media.getUpdatedDate();

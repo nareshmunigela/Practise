@@ -55,7 +55,7 @@
 <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 <span class="action-tools margin-r-5"><button type="button">+</button></span>New</a>
 <ul class="dropdown-menu">
-<li role="presentation"><a role="menuitem" tabindex="-1" href="/newserviceorder">+ New Service Order</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" th:href="@{/newserviceorder}">+ New Service Order</a></li>
 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">+ Close Service Order</a></li>
 <li role="presentation"><a role="menuitem" tabindex="-1" href="/dispatchboard">+ Dispatch Board</a></li>
 </ul>
@@ -155,10 +155,11 @@
 				  
 				 
 				   <!-- <td><span th:text="${siteDTO.updatedDate}"></span></td> -->
-				  
-				  
-				  <td class="col-md-2 text-right"><a th:href="${'/sodrderview?soId='+siteDTO.serviceOrderId+'&tabSet=so'}" class="btn btn-primary btn-flat margin-t-10  margin-r-5" data-toggle="tooltip" data-original-title="View Service Order">
+				  <td class="col-md-2 text-right" th:with="soIdVal=${siteDTO.serviceOrderId}">
+				  <a th:href="@{/sodrderview(soId=${soIdVal},tabSet='so')}" 
+				  class="btn btn-primary btn-flat margin-t-10  margin-r-5" data-toggle="tooltip" data-original-title="View Service Order">
 				  View </a>
+				  
 				  <a th:href="${'/newsoForExistingSite?soId='+siteDTO.serviceOrderId}" class="btn btn-primary btn-flat  margin-t-10" data-toggle="tooltip" data-original-title="New Service Order">
 				  New </a></td>
 				  

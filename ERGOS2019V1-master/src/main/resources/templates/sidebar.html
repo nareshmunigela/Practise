@@ -1,3 +1,6 @@
+ 
+ <!DOCTYPE html>
+
    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <aside class="main-sidebar bg-blue-gradient">
 	 <!-- sidebar: style can be found in sidebar.less -->
@@ -11,7 +14,7 @@
       </a>
 	  </div>
 	    <li><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-		<li class="active toogle_nav_li"><a href="/sitesList"><i class="fa fa-file fa-lg"></i> <span>Service Manager</span></a></li>
+		<li class="active toogle_nav_li"><a th:href="@{/sitesList}"><i class="fa fa-file fa-lg"></i> <span>Service Manager</span></a></li>
 		<li><a href="#"><i class="fa fa-tag fa-lg"></i> <span>My Price Guide</span></a></li>
 		<li><a href="#"><i class="fa fa-credit-card fa-lg"></i> <span>Membership</span></a></li>
 		<li><a href="#"><i class="fa fa-crosshairs fa-lg"></i> <span>Add Tracking</span></a></li>
